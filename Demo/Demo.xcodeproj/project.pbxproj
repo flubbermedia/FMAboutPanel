@@ -80,6 +80,14 @@
 		14B2827615BEF11D0030CAC5 /* trees.c in Sources */ = {isa = PBXBuildFile; fileRef = 14B2823215BEF11D0030CAC5 /* trees.c */; };
 		14B2827715BEF11D0030CAC5 /* uncompr.c in Sources */ = {isa = PBXBuildFile; fileRef = 14B2823415BEF11D0030CAC5 /* uncompr.c */; };
 		14B2827815BEF11D0030CAC5 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 14B2823715BEF11D0030CAC5 /* zutil.c */; };
+		14FD2A2C15BF1D0100FEE5C4 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2415BF1D0100FEE5C4 /* Default-Landscape.png */; };
+		14FD2A2D15BF1D0100FEE5C4 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2515BF1D0100FEE5C4 /* Default-Portrait.png */; };
+		14FD2A2E15BF1D0100FEE5C4 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2615BF1D0100FEE5C4 /* Default.png */; };
+		14FD2A2F15BF1D0100FEE5C4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2715BF1D0100FEE5C4 /* Default@2x.png */; };
+		14FD2A3015BF1D0100FEE5C4 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2815BF1D0100FEE5C4 /* Icon-72.png */; };
+		14FD2A3115BF1D0100FEE5C4 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2915BF1D0100FEE5C4 /* Icon-72@2x.png */; };
+		14FD2A3215BF1D0100FEE5C4 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2A15BF1D0100FEE5C4 /* Icon.png */; };
+		14FD2A3315BF1D0100FEE5C4 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2B15BF1D0100FEE5C4 /* Icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -185,6 +193,14 @@
 		14B2823615BEF11D0030CAC5 /* zlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zlib.h; sourceTree = "<group>"; };
 		14B2823715BEF11D0030CAC5 /* zutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zutil.c; sourceTree = "<group>"; };
 		14B2823815BEF11D0030CAC5 /* zutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zutil.h; sourceTree = "<group>"; };
+		14FD2A2415BF1D0100FEE5C4 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
+		14FD2A2515BF1D0100FEE5C4 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
+		14FD2A2615BF1D0100FEE5C4 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		14FD2A2715BF1D0100FEE5C4 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		14FD2A2815BF1D0100FEE5C4 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		14FD2A2915BF1D0100FEE5C4 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
+		14FD2A2A15BF1D0100FEE5C4 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		14FD2A2B15BF1D0100FEE5C4 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +254,7 @@
 				14B281D415BEF1040030CAC5 /* ViewController.m */,
 				14B281CD15BEF1040030CAC5 /* MainStoryboard_iPhone.storyboard */,
 				14B281D015BEF1040030CAC5 /* MainStoryboard_iPad.storyboard */,
+				14FD2A2315BF1D0100FEE5C4 /* Images */,
 				14B281C215BEF1040030CAC5 /* Supporting Files */,
 			);
 			path = Demo;
@@ -390,6 +407,21 @@
 			path = ZLib;
 			sourceTree = "<group>";
 		};
+		14FD2A2315BF1D0100FEE5C4 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				14FD2A2415BF1D0100FEE5C4 /* Default-Landscape.png */,
+				14FD2A2515BF1D0100FEE5C4 /* Default-Portrait.png */,
+				14FD2A2615BF1D0100FEE5C4 /* Default.png */,
+				14FD2A2715BF1D0100FEE5C4 /* Default@2x.png */,
+				14FD2A2815BF1D0100FEE5C4 /* Icon-72.png */,
+				14FD2A2915BF1D0100FEE5C4 /* Icon-72@2x.png */,
+				14FD2A2A15BF1D0100FEE5C4 /* Icon.png */,
+				14FD2A2B15BF1D0100FEE5C4 /* Icon@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -483,6 +515,14 @@
 				14B2825E15BEF11D0030CAC5 /* flubber-panel-logo~iphone.png in Resources */,
 				14B2825F15BEF11D0030CAC5 /* FMAboutPanel~ipad.xib in Resources */,
 				14B2826015BEF11D0030CAC5 /* FMAboutPanel~iphone.xib in Resources */,
+				14FD2A2C15BF1D0100FEE5C4 /* Default-Landscape.png in Resources */,
+				14FD2A2D15BF1D0100FEE5C4 /* Default-Portrait.png in Resources */,
+				14FD2A2E15BF1D0100FEE5C4 /* Default.png in Resources */,
+				14FD2A2F15BF1D0100FEE5C4 /* Default@2x.png in Resources */,
+				14FD2A3015BF1D0100FEE5C4 /* Icon-72.png in Resources */,
+				14FD2A3115BF1D0100FEE5C4 /* Icon-72@2x.png in Resources */,
+				14FD2A3215BF1D0100FEE5C4 /* Icon.png in Resources */,
+				14FD2A3315BF1D0100FEE5C4 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
