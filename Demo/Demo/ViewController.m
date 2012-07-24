@@ -1,0 +1,46 @@
+//
+//  ViewController.m
+//  Demo
+//
+//  Created by Maurizio Cremaschi on 7/24/12.
+//  Copyright (c) 2012 Flubber Media Ltd. All rights reserved.
+//
+
+#import "ViewController.h"
+#import "FMAboutPanel.h"
+
+@interface ViewController ()
+
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    } else {
+        return YES;
+    }
+}
+
+#pragma mark - Actions
+
+- (IBAction)didTapShowPanel:(id)sender
+{
+    [[FMAboutPanel sharedInstance] present];
+}
+
+@end
