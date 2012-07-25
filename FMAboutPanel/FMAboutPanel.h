@@ -57,6 +57,7 @@ typedef void (^EventTracking)(NSString *event, NSDictionary *parameters);
 @property (assign, nonatomic) BOOL debug;
 @property (assign, nonatomic) double applicationsUpdatePeriod;
 @property (strong, nonatomic) NSString *applicationsRemoteBaseURL;
+@property (strong, nonatomic) NSString *logoImageName;
 @property (strong, nonatomic) NSString *facebookWebURL;
 @property (strong, nonatomic) NSString *facebookNativeURL;
 @property (strong, nonatomic) NSString *twitterWebURL;

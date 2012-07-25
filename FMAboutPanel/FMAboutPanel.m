@@ -50,6 +50,7 @@ static NSString * const kApplicationsLocalPlistFilename = @"applications.plist";
 static NSString * const kAppStoreFormat = @"itms-apps://itunes.apple.com/app/id%@";
 static NSString * const kTrackingPrefix = @"page.flubberpanel";
 
+static NSString * const kLogoImageName = @"flubber-panel-logo.png";
 static NSString * const kFacebookWebURL = @"https://www.facebook.com/flubbermedia";
 static NSString * const kFacebookNativeURL = @"fb://page/327002840656323";
 static NSString * const kTwitterWebURL = @"https://twitter.com/#!/flubbermedia";
@@ -89,6 +90,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 @synthesize debug;
 @synthesize applicationsUpdatePeriod;
 @synthesize applicationsRemoteBaseURL;
+@synthesize logoImageName;
 @synthesize facebookWebURL;
 @synthesize facebookNativeURL;
 @synthesize twitterWebURL;
@@ -144,6 +146,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		self.debug = NO;
 		self.applicationsUpdatePeriod = kApplicationsUpdatePeriod;
 		self.applicationsRemoteBaseURL = kApplicationsRemoteBaseURL;
+		self.logoImageName = kLogoImageName;
 		self.facebookWebURL = kFacebookWebURL;
 		self.facebookNativeURL = kFacebookNativeURL;
 		self.twitterWebURL = kTwitterWebURL;
@@ -171,6 +174,8 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	self.logoImageView.image = [UIImage imageNamed:self.logoImageName];
 
     self.followUsLabel.text = NSLocalizedString(@"Follow us", @"Flubber Panel: social title");
     self.ourAppsLabel.text = NSLocalizedString(@"Our Apps", @"Flubber Panel: our apps section title");
@@ -227,6 +232,11 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 - (void)viewWillAppear:(BOOL)animated
 {
 	[self layout];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[self cancelConnection:self.iTunesConnection];
 }
 
 - (void)layout
@@ -344,32 +354,42 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 }
 
 - (void)presentAnimated:(BOOL)animated
-{
-    UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    
+{    
 	NSString *eventString = [self.trackingPrefix lowercaseString];
 	NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:self.applicationsPlistVersion, @"plistVersion", nil];
 	self.logEvent(eventString, parameters);
 	
-    self.view.frame = viewController.view.bounds;
-    [self viewWillAppear:YES];
+	UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+	[self viewWillAppear:animated];
     [viewController.view addSubview:self.view];
-    
-    self.darkView.alpha = 0.;
-	self.box.transform = CGAffineTransformIdentity;
-    self.box.transform = CGAffineTransformMakeTranslation(0., self.view.frame.size.height);
+	self.box.center = self.darkView.center;
+
+	void (^animations) (void) = ^{
+		self.darkView.alpha = 1.;
+		self.box.transform = CGAffineTransformIdentity;
+	};
+	
+	void (^completion) (BOOL) = ^(BOOL finished){
+		self.view.layer.shouldRasterize = NO;
+		[self viewDidAppear:animated];
+	};
+	
+	// there's a problem with animateWithDuration when you give it 0.
 	self.view.layer.shouldRasterize = YES;
-    
-	NSTimeInterval duration = (animated) ? 0.3f : 0.0f;
-    [UIView animateWithDuration:duration
-                     animations:^{
-                         self.darkView.alpha = 1.;
-                         self.box.transform = CGAffineTransformIdentity;						 
-                     }
-                     completion:^(BOOL finished) {             
-                         self.view.layer.shouldRasterize = NO;
-                         [self viewDidAppear:YES];
-                     }];
+	if (animated == NO)
+	{
+		animations();
+		completion(YES);
+		return;
+	}
+
+	self.darkView.alpha = 0.;
+	NSLog(@"%@", NSStringFromCGRect(self.view.frame));
+	self.box.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0., self.view.frame.size.height);
+	
+	[UIView animateWithDuration:.3
+                     animations:animations
+                     completion:completion];
 }
 
 - (void)dismiss
@@ -378,22 +398,32 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 }
 
 - (void)dismissAnimated:(BOOL)animated
-{
-    [self cancelConnection:self.iTunesConnection];
-    [self viewWillDisappear:YES];
-    self.view.layer.shouldRasterize = YES;
-	NSTimeInterval duration = (animated) ? 0.3f : 0.0f;
-    [UIView animateWithDuration:duration
-                     animations:^{
-                         self.darkView.alpha = 0.;
-                         self.box.transform = CGAffineTransformIdentity;                         
-                         self.box.transform = CGAffineTransformMakeTranslation(0., self.view.frame.size.height);
-                     }
-                     completion:^(BOOL finished) {
-                         self.box.transform = CGAffineTransformIdentity;
-                         [self.view removeFromSuperview];
-                         [self viewDidDisappear:YES];                         
-                     }];
+{	
+    [self viewWillDisappear:animated];
+	
+	void (^animations) (void) = ^{
+		self.darkView.alpha = 0.;
+		self.box.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0., self.view.frame.size.height);
+	};
+	
+	void (^completion) (BOOL) = ^(BOOL finished){
+		self.view.layer.shouldRasterize = NO;
+		[self.view removeFromSuperview];
+		[self viewDidDisappear:animated];
+	};
+	
+	// there's a problem with animateWithDuration when you give it 0.
+	self.view.layer.shouldRasterize = YES;
+	if (animated == NO)
+	{
+		animations();
+		completion(YES);
+		return;
+	}
+	
+    [UIView animateWithDuration:.3
+                     animations:animations
+                     completion:completion];
 }
 
 #pragma mark - Actions
