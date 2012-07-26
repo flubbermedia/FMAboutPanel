@@ -360,8 +360,9 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 	self.logEvent(eventString, parameters);
 	
 	UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-	[self viewWillAppear:animated];
     [viewController.view addSubview:self.view];
+	// needs to be called after adding the view, otherwise subviews won't have any frame set.
+	[self viewWillAppear:animated];
 	self.box.center = self.darkView.center;
 
 	void (^animations) (void) = ^{
@@ -590,12 +591,6 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 								   {
 									   [self unzipData:data];
 									   [self updateApplications];
-//									   dispatch_async(dispatch_get_main_queue(), ^{
-//										   if ([self.view superview])
-//										   {
-//											   [self layout];
-//										   }
-//									   });
 								   }
 							   }
                            }];
