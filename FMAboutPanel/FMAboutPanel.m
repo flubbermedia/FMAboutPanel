@@ -688,6 +688,13 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		{
 			[self loadApplicationsRemoteData];
 		}
+		// This control checks if the panel is displayed when coming back from background
+		// and in this case it refresh the content
+		if ([self.view superview])
+		{
+			// Refresh view if it's displayed on screen
+			[self layout];
+		}
 	}
 }
 
