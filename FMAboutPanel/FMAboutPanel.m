@@ -61,7 +61,6 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 @interface FMAboutPanel ()
 
-@property (strong, nonatomic) NSOperationQueue *queue;
 @property (strong, nonatomic) NSURLConnection *iTunesConnection;
 @property (strong, nonatomic) NSURL *iTunesURL;
 @property (strong, nonatomic) NSArray *applications;
@@ -99,7 +98,6 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 @synthesize copyrightString;
 @synthesize trackingPrefix;
 
-@synthesize queue;
 @synthesize iTunesConnection;
 @synthesize iTunesURL;
 @synthesize applications;
@@ -565,20 +563,21 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 - (void)loadApplicationsRemoteData
 {
     //start downloading the remote applications.plist
-    NSString *urlParameters = [NSString stringWithFormat:kApplicationsRemoteRequestFormat,
+	
+	NSString *urlParameters = [NSString stringWithFormat:kApplicationsRemoteRequestFormat,
                                [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"],
                                [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"],
                                [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode],
                                self.applicationsPlistVersion
                                ];
-    
+	
+	urlParameters = [urlParameters stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
     NSString *urlPath = [self.applicationsRemoteBaseURL stringByAppendingString:urlParameters];
     
-    self.queue = [NSOperationQueue new];
     NSURL *url = [NSURL URLWithString:urlPath];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:20];
     [NSURLConnection sendAsynchronousRequest:request
-                                       queue:self.queue 
+                                       queue:[NSOperationQueue new]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {                               
                                if (error == nil)
 							   {
@@ -587,11 +586,27 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 								   
 								   // Check if data or old content. Server should return statusCode 204 if update is not necessary
 								   NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
-								   if (data != nil && statusCode == 200)
+								   
+								   // Check the content-type header
+								   NSString *contentTypeValue = nil;
+								   NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
+								   for (NSString *headerKey in [headers allKeys])
+								   {
+									   if ([@"content-type" caseInsensitiveCompare:headerKey] == NSOrderedSame)
+									   {
+										   contentTypeValue = [[headers valueForKey:headerKey] lowercaseString];
+									   }
+								   }
+								   
+								   if (data != nil && statusCode == 200 && [contentTypeValue isEqualToString:@"application/zip"])
 								   {
 									   [self unzipData:data];
 									   [self updateApplications];
 								   }
+							   }
+							   else
+							   {
+								   //NSLog(@"Error: %@", [error localizedDescription]);
 							   }
                            }];
 }
