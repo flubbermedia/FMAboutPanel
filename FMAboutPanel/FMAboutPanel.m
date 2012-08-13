@@ -42,7 +42,7 @@ static NSString * const kFPName = @"name";
 static NSString * const kFPImage = @"image";
 
 static NSString * const kApplicationsRemoteBaseURL = @"http://services.flubbermedia.com/flubberpanel";
-static NSString * const kApplicationsRemoteRequestFormat = @"?appid=%@&appversion=%@&applocale=%@&contentversion=%@";
+static NSString * const kApplicationsRemoteRequestFormat = @"?appid=%@&appversion=%@&applocale=%@&device=%@&contentversion=%@";
 static NSString * const kApplicationsRemoteLastCheckDateKey = @"flubberpanel.lastcheck";
 static NSString * const kApplicationsTempZipFilename = @"applications.temp.zip";
 static NSString * const kApplicationsLocalZipFilename = @"applications.zip";
@@ -568,6 +568,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
                                [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"],
                                [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"],
                                [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode],
+                               [[UIDevice currentDevice] model],
                                self.applicationsPlistVersion
                                ];
 	
