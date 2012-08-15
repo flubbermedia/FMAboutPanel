@@ -383,7 +383,6 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 	}
 
 	self.darkView.alpha = 0.;
-	NSLog(@"%@", NSStringFromCGRect(self.view.frame));
 	self.box.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0., self.view.frame.size.height);
 	
 	[UIView animateWithDuration:.3
