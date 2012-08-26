@@ -27,10 +27,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ChimpKit.h"
 
 typedef void (^EventTracking)(NSString *event, NSDictionary *parameters);
 
-@interface FMAboutPanel : UIViewController <NSURLConnectionDelegate, UIScrollViewDelegate>
+@interface FMAboutPanel : UIViewController <NSURLConnectionDelegate, UIScrollViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ChimpKitDelegate>
 
 // Tracking Block
 
@@ -55,6 +56,8 @@ typedef void (^EventTracking)(NSString *event, NSDictionary *parameters);
 // Public
 
 @property (assign, nonatomic) BOOL debug;
+@property (assign, nonatomic) BOOL newsletterEnabled;
+@property (assign, nonatomic) BOOL newsletterDoubleOptIn;
 @property (assign, nonatomic) double applicationsUpdatePeriod;
 @property (strong, nonatomic) NSString *applicationsRemoteBaseURL;
 @property (strong, nonatomic) NSString *logoImageName;
@@ -63,6 +66,8 @@ typedef void (^EventTracking)(NSString *event, NSDictionary *parameters);
 @property (strong, nonatomic) NSString *twitterWebURL;
 @property (strong, nonatomic) NSString *twitterNativeURL;
 @property (strong, nonatomic) NSString *websiteURL;
+@property (strong, nonatomic) NSString *newsletterApiKey;
+@property (strong, nonatomic) NSString *newsletterListID;
 @property (strong, nonatomic) NSString *copyrightString;
 @property (strong, nonatomic) NSString *trackingPrefix;
 

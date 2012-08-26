@@ -56,6 +56,8 @@ static NSString * const kFacebookNativeURL = @"fb://page/327002840656323";
 static NSString * const kTwitterWebURL = @"https://twitter.com/#!/flubbermedia";
 static NSString * const kTwitterNativeURL = @"twitter://user?screen_name=flubbermedia";
 static NSString * const kWebsiteURL = @"http://flubbermedia.com";
+static NSString * const kNewsletterApiKey = nil;
+static NSString * const kNewsletterListID = nil;
 static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll rights reserved";
 
 
@@ -65,6 +67,8 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 @property (strong, nonatomic) NSURL *iTunesURL;
 @property (strong, nonatomic) NSArray *applications;
 @property (strong, nonatomic) NSString *applicationsPlistVersion;
+@property (strong, nonatomic) UIAlertView *newsletterSignupAlertView;
+@property (strong, nonatomic) UITextField *newsletterSignupTextField;
 
 @end
 
@@ -142,6 +146,8 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		
 		// set defaults
 		self.debug = NO;
+		self.newsletterEnabled = NO;
+		self.newsletterDoubleOptIn = NO;
 		self.applicationsUpdatePeriod = kApplicationsUpdatePeriod;
 		self.applicationsRemoteBaseURL = kApplicationsRemoteBaseURL;
 		self.logoImageName = kLogoImageName;
@@ -150,6 +156,8 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		self.twitterWebURL = kTwitterWebURL;
 		self.twitterNativeURL = kTwitterNativeURL;
 		self.websiteURL = kWebsiteURL;
+		self.newsletterApiKey = kNewsletterApiKey;
+		self.newsletterListID = kNewsletterListID;
 		self.copyrightString = kCopyrightText;
 		self.trackingPrefix = kTrackingPrefix;
 		self.logEvent = ^(NSString *event, NSDictionary *parameters)
@@ -196,20 +204,17 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
     [self.darkView addGestureRecognizer:tapGesture];
 	
-	//////////////////////////////////////////////////////////////////////////////
-	// Temporary disable Newsletter icon
-	//
-	CGAffineTransform buttonTransform = CGAffineTransformMakeTranslation(40., 0.);
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+	if (self.newsletterEnabled == NO)
 	{
-		buttonTransform = CGAffineTransformMakeTranslation(80., 0.);
+		CGAffineTransform buttonTransform = CGAffineTransformMakeTranslation(40., 0.);
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+		{
+			buttonTransform = CGAffineTransformMakeTranslation(80., 0.);
+		}
+		self.newsletterButton.hidden = YES;
+		self.facebookButton.transform = buttonTransform;
+		self.twitterButton.transform = buttonTransform;
 	}
-	self.newsletterButton.hidden = YES;
-	self.facebookButton.transform = buttonTransform;
-	self.twitterButton.transform = buttonTransform;
-	//
-	// Remove the above block to re-enable the Newsletter icon
-	//////////////////////////////////////////////////////////////////////////////
 }
 
 - (void)viewDidUnload
@@ -516,7 +521,30 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 - (IBAction)didTapNewsletter:(id)sender
 {
 	NSString *eventString = [NSString stringWithFormat:@"%@.follow.newsletter", [self.trackingPrefix lowercaseString]];
-	self.logEvent(eventString, nil);	
+	self.logEvent(eventString, nil);
+	
+	if (!_newsletterApiKey || !_newsletterListID)
+	{
+		NSLog(@"Warning: Newsletter ApiKey or ListID missing");
+		return;
+	}
+	self.newsletterSignupAlertView = [[UIAlertView alloc] initWithTitle:@"Subscribe"
+													message:@"Enter your email address to subscribe to our mailing list."
+												   delegate:self
+										  cancelButtonTitle:@"Cancel"
+										  otherButtonTitles:@"Subscribe", nil ];
+
+	self.newsletterSignupAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+	
+	self.newsletterSignupTextField = [self.newsletterSignupAlertView textFieldAtIndex:0];
+	
+	// Common text field properties
+	self.newsletterSignupTextField.placeholder = @"Email Address";
+	self.newsletterSignupTextField.keyboardType = UIKeyboardTypeEmailAddress;
+	self.newsletterSignupTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+	self.newsletterSignupTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	
+	[self.newsletterSignupAlertView show];
 }
 
 #pragma mark - Applications method
@@ -769,6 +797,50 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
     CGFloat width = scrollView.bounds.size.width;
     int currentPage = floor((scrollView.contentOffset.x - width * 0.5) / width) + 1;
 	self.pageControl.currentPage = currentPage;
+}
+
+#pragma mark - ChimpKit Delegate Methods
+
+- (void)showSubscribeError {
+    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Subscription Failed"
+                                                             message:@"We couldn't subscribe you to the list.  Please check your email address and try again."
+                                                            delegate:nil
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles:nil];
+    [errorAlertView show];
+}
+
+- (void)ckRequestSucceeded:(ChimpKit *)ckRequest {
+    if (![ckRequest.responseString isEqualToString:@"true"]) {
+        [self showSubscribeError];
+    }
+}
+
+- (void)ckRequestFailed:(NSError *)error {
+    [self showSubscribeError];
+}
+
+#pragma mark - ChimpKit <UIAlertViewDelegate> Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView == self.newsletterSignupAlertView && buttonIndex == 1) { // Subscribe pressed
+        NSMutableDictionary *params = [NSMutableDictionary dictionary];
+        [params setValue:_newsletterListID forKey:@"id"];
+        [params setValue:_newsletterSignupTextField.text forKey:@"email_address"];
+        [params setValue:(_newsletterDoubleOptIn ? @"true" : @"false") forKey:@"double_optin"];
+		ChimpKit *cKit = [[ChimpKit alloc] initWithDelegate:self andApiKey:_newsletterApiKey];
+        [cKit callApiMethod:@"listSubscribe" withParams:params];
+    }
+}
+
+#pragma mark - ChimpKit <UITextFieldDelegate> Methods
+
+- (BOOL)textFieldShouldReturn:(UITextField *)aTextField {
+	if (aTextField == self.newsletterSignupTextField)
+	{
+		[aTextField resignFirstResponder];
+		return NO;
+	}
+	return YES;
 }
 
 

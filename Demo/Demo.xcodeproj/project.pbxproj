@@ -88,6 +88,7 @@
 		14FD2A3115BF1D0100FEE5C4 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2915BF1D0100FEE5C4 /* Icon-72@2x.png */; };
 		14FD2A3215BF1D0100FEE5C4 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2A15BF1D0100FEE5C4 /* Icon.png */; };
 		14FD2A3315BF1D0100FEE5C4 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2B15BF1D0100FEE5C4 /* Icon@2x.png */; };
+		653B1EDE15E9AD0A006A091F /* ChimpKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 653B1EDB15E9AD0A006A091F /* ChimpKit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -201,6 +202,8 @@
 		14FD2A2915BF1D0100FEE5C4 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		14FD2A2A15BF1D0100FEE5C4 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		14FD2A2B15BF1D0100FEE5C4 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		653B1EDA15E9AD0A006A091F /* ChimpKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChimpKit.h; sourceTree = "<group>"; };
+		653B1EDB15E9AD0A006A091F /* ChimpKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChimpKit.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,6 +335,7 @@
 		14B2820615BEF11D0030CAC5 /* FMAboutPanel.sources */ = {
 			isa = PBXGroup;
 			children = (
+				653B1ED915E9AD0A006A091F /* ChimpKit */,
 				14B2820715BEF11D0030CAC5 /* MiniZip */,
 				14B2821115BEF11D0030CAC5 /* Objective-Zip */,
 				14B2821E15BEF11D0030CAC5 /* ZLib */,
@@ -420,6 +424,15 @@
 				14FD2A2B15BF1D0100FEE5C4 /* Icon@2x.png */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		653B1ED915E9AD0A006A091F /* ChimpKit */ = {
+			isa = PBXGroup;
+			children = (
+				653B1EDA15E9AD0A006A091F /* ChimpKit.h */,
+				653B1EDB15E9AD0A006A091F /* ChimpKit.m */,
+			);
+			path = ChimpKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -561,6 +574,7 @@
 				14B2827615BEF11D0030CAC5 /* trees.c in Sources */,
 				14B2827715BEF11D0030CAC5 /* uncompr.c in Sources */,
 				14B2827815BEF11D0030CAC5 /* zutil.c in Sources */,
+				653B1EDE15E9AD0A006A091F /* ChimpKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
