@@ -847,8 +847,8 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 - (BOOL)textFieldShouldReturn:(UITextField *)aTextField
 {
 	if (aTextField == self.newsletterSignupTextField)
-	{
-		[aTextField resignFirstResponder];
+	{        
+        [self.newsletterSignupAlertView dismissWithClickedButtonIndex:1 animated:YES];
 		return NO;
 	}
 	return YES;
