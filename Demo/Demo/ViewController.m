@@ -19,8 +19,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-	
-	[FMAboutPanel sharedInstance].newsletterEnabled = YES;
 }
 
 - (void)viewDidUnload
