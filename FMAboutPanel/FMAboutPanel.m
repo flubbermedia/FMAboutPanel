@@ -69,6 +69,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 @property (strong, nonatomic) NSString *applicationsPlistVersion;
 @property (strong, nonatomic) UIAlertView *newsletterSignupAlertView;
 @property (strong, nonatomic) UITextField *newsletterSignupTextField;
+@property (strong, nonatomic) ChimpKit *chimpKit;
 
 @end
 
@@ -820,21 +821,31 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
     [self showSubscribeError];
 }
 
-#pragma mark - ChimpKit <UIAlertViewDelegate> Methods
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView == self.newsletterSignupAlertView && buttonIndex == 1) { // Subscribe pressed
-        NSMutableDictionary *params = [NSMutableDictionary dictionary];
-        [params setValue:_newsletterListID forKey:@"id"];
-        [params setValue:_newsletterSignupTextField.text forKey:@"email_address"];
-        [params setValue:(_newsletterDoubleOptIn ? @"true" : @"false") forKey:@"double_optin"];
-		ChimpKit *cKit = [[ChimpKit alloc] initWithDelegate:self andApiKey:_newsletterApiKey];
-        [cKit callApiMethod:@"listSubscribe" withParams:params];
+#pragma mark - ChimpKit
+
+- (void)chimpKitSubscribe
+{
+    _chimpKit.delegate = nil;
+    _chimpKit = [[ChimpKit alloc] initWithDelegate:self andApiKey:_newsletterApiKey];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setValue:_newsletterListID forKey:@"id"];
+    [params setValue:_newsletterSignupTextField.text forKey:@"email_address"];
+    [params setValue:(_newsletterDoubleOptIn ? @"true" : @"false") forKey:@"double_optin"];
+    [_chimpKit callApiMethod:@"listSubscribe" withParams:params];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView == self.newsletterSignupAlertView && buttonIndex == 1)
+    {
+        // Subscribe pressed
+        [self chimpKitSubscribe];
     }
 }
 
-#pragma mark - ChimpKit <UITextFieldDelegate> Methods
-
-- (BOOL)textFieldShouldReturn:(UITextField *)aTextField {
+- (BOOL)textFieldShouldReturn:(UITextField *)aTextField
+{
 	if (aTextField == self.newsletterSignupTextField)
 	{
 		[aTextField resignFirstResponder];
@@ -843,5 +854,12 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 	return YES;
 }
 
+#pragma mark - Memory
+
+- (void)dealloc
+{
+    _chimpKit.delegate = nil;
+    _chimpKit = nil;
+}
 
 @end
