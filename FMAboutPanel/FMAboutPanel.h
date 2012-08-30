@@ -68,6 +68,8 @@ typedef void (^EventTracking)(NSString *event, NSDictionary *parameters);
 @property (strong, nonatomic) NSString *websiteURL;
 @property (strong, nonatomic) NSString *newsletterApiKey;
 @property (strong, nonatomic) NSString *newsletterListID;
+@property (strong, nonatomic) NSString *newsletterListGroup;
+@property (strong, nonatomic) NSString *newsletterListGroupOption;
 @property (strong, nonatomic) NSString *copyrightString;
 @property (strong, nonatomic) NSString *trackingPrefix;
 
