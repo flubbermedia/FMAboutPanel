@@ -505,6 +505,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 	_newsletterSignupTextField = [_newsletterSignupAlertView textFieldAtIndex:0];
 	
 	// Common text field properties
+	_newsletterSignupTextField.delegate = self;
 	_newsletterSignupTextField.placeholder = @"Email Address";
 	_newsletterSignupTextField.keyboardType = UIKeyboardTypeEmailAddress;
 	_newsletterSignupTextField.autocorrectionType = UITextAutocorrectionTypeNo;
