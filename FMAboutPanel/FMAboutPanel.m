@@ -769,7 +769,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (void)showSubscribeError {
     UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Subscription Failed"
-                                                             message:@"We couldn't subscribe you to the list.  Please check your email address and try again."
+                                                             message:@"We couldn't subscribe you to the list. Please check your email address and try again."
                                                             delegate:nil
                                                    cancelButtonTitle:@"OK"
                                                    otherButtonTitles:nil];
@@ -791,6 +791,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 - (void)chimpKitSubscribe
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
+	[params setValue:@"true" forKey:@"update_existing"];
     [params setValue:_newsletterListID forKey:@"id"];
     [params setValue:_newsletterSignupTextField.text forKey:@"email_address"];
     [params setValue:(_newsletterDoubleOptIn ? @"true" : @"false") forKey:@"double_optin"];
@@ -802,11 +803,10 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 							 ];
 		
 		NSMutableDictionary *mergeVars = [NSMutableDictionary dictionary];
-		[mergeVars setValue:_newsletterListGroupOption forKey:@"FNAME"];
-		[mergeVars setValue:@"User" forKey:@"LNAME"];
 		[mergeVars setValue:grouping forKey:@"GROUPINGS"];
 		
 		[params setValue:mergeVars forKey:@"merge_vars"];
+		[params setValue:@"false" forKey:@"replace_interests"];
 	}
     ChimpKit *chimpKit = [[ChimpKit alloc] initWithDelegate:self andApiKey:_newsletterApiKey];
 	[chimpKit callApiMethod:@"listSubscribe" withParams:params];
