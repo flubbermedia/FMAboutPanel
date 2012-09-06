@@ -30,12 +30,14 @@
 #import "ChimpKit.h"
 
 typedef void (^EventTracking)(NSString *event, NSDictionary *parameters);
+typedef void (^PageTracking)(NSString *page, NSDictionary *parameters);
 
 @interface FMAboutPanel : UIViewController <NSURLConnectionDelegate, UIScrollViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ChimpKitDelegate>
 
 // Tracking Block
 
 @property (nonatomic, copy) EventTracking logEvent;
+@property (nonatomic, copy) PageTracking logPage;
 
 // Outlet
 
@@ -56,6 +58,7 @@ typedef void (^EventTracking)(NSString *event, NSDictionary *parameters);
 // Public
 
 @property (assign, nonatomic) BOOL debug;
+@property (assign, nonatomic) BOOL trackingPageViews;
 @property (assign, nonatomic) BOOL newsletterEnabled;
 @property (assign, nonatomic) BOOL newsletterDoubleOptIn;
 @property (assign, nonatomic) double applicationsUpdatePeriod;

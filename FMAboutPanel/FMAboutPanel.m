@@ -110,6 +110,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		
 		// set defaults
 		_debug = NO;
+		_trackingPageViews = NO;
 		_newsletterEnabled = NO;
 		_newsletterDoubleOptIn = NO;
 		_applicationsUpdatePeriod = kApplicationsUpdatePeriod;
@@ -128,7 +129,11 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		_trackingPrefix = kTrackingPrefix;
 		_logEvent = ^(NSString *event, NSDictionary *parameters)
 		{
-			NSLog(@"Warning: Tracking Block Missing for event: %@ and parameters: %@", event, parameters);
+			NSLog(@"*** Warning: Tracking Block Missing for event: %@ and parameters: %@", event, parameters);
+		};
+		_logPage = ^(NSString *page, NSDictionary *parameters)
+		{
+			NSLog(@"*** Warning: Tracking Block Missing for page: %@ and parameters: %@", page, parameters);
 		};
 		
 		// initialize local data
@@ -326,7 +331,14 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 {    
 	NSString *eventString = [_trackingPrefix lowercaseString];
 	NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:_applicationsPlistVersion, @"plistVersion", nil];
-	_logEvent(eventString, parameters);
+	if (_trackingPageViews)
+	{
+		_logPage(eventString, parameters);
+	}
+	else
+	{
+		_logEvent(eventString, parameters);
+	}
 	
 	UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     [viewController.view addSubview:self.view];
