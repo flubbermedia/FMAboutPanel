@@ -29,7 +29,7 @@
 #import <UIKit/UIKit.h>
 #import "ChimpKit.h"
 
-typedef void (^EventTracking)(NSString *event, NSDictionary *parameters);
+typedef void (^EventTracking)(NSString *category, NSString *action, NSString *label, NSDictionary *parameters);
 typedef void (^PageTracking)(NSString *page, NSDictionary *parameters);
 
 @interface FMAboutPanel : UIViewController <NSURLConnectionDelegate, UIScrollViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ChimpKitDelegate>

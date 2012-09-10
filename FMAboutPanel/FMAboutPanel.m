@@ -127,13 +127,13 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		_newsletterListGroupOption = nil;
 		_copyrightString = kCopyrightText;
 		_trackingPrefix = kTrackingPrefix;
-		_logEvent = ^(NSString *event, NSDictionary *parameters)
+		_logEvent = ^(NSString *category, NSString *action, NSString *label, NSDictionary *parameters)
 		{
-			NSLog(@"*** Warning: Tracking Block Missing for event: %@ and parameters: %@", event, parameters);
+			NSLog(@"*** Warning: Tracking Block Missing for event category:%@|action:%@|label:%@|parameters:%@", category, action, label, parameters);
 		};
 		_logPage = ^(NSString *page, NSDictionary *parameters)
 		{
-			NSLog(@"*** Warning: Tracking Block Missing for page: %@ and parameters: %@", page, parameters);
+			NSLog(@"*** Warning: Tracking Block Missing for page:%@|parameters:%@", page, parameters);
 		};
 		
 		// initialize local data
@@ -329,17 +329,19 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (void)presentAnimated:(BOOL)animated
 {    
-	NSString *eventString = [_trackingPrefix lowercaseString];
-	NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:_applicationsPlistVersion, @"plistVersion", nil];
+	NSString *eventCategory = [_trackingPrefix lowercaseString];
+	NSString *eventAction = nil;
+	NSString *eventLabel = nil;
+	NSDictionary *eventParameters = [NSDictionary dictionaryWithObjectsAndKeys:_applicationsPlistVersion, @"plistVersion", nil];
 	if (_trackingPageViews)
 	{
-		_logPage(eventString, parameters);
+		_logPage(eventCategory, eventParameters);
 	}
 	else
 	{
-		_logEvent(eventString, parameters);
+		_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
 	}
-	
+		
 	UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     [viewController.view addSubview:self.view];
 	// needs to be called after adding the view, otherwise subviews won't have any frame set.
@@ -442,9 +444,11 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
         url = [NSURL URLWithString:urlPath];
     }
 	
-	NSString *eventString = [NSString stringWithFormat:@"%@.apps", [_trackingPrefix lowercaseString]];
-	NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:[app objectForKey:kFPName], @"appName", [NSNumber numberWithBool:found], @"installed", nil];
-	_logEvent(eventString, parameters);
+	NSString *eventCategory = [_trackingPrefix lowercaseString];
+	NSString *eventAction = @"apps";
+	NSString *eventLabel = nil;
+	NSDictionary *eventParameters = [NSDictionary dictionaryWithObjectsAndKeys:[app objectForKey:kFPName], @"appName", [NSNumber numberWithBool:found], @"installed", nil];
+	_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
 	
 	// This must be called after analitycs/tracking calls
 	if (found)
@@ -461,8 +465,11 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (IBAction)didTapFacebook:(id)sender
 {
-	NSString *eventString = [NSString stringWithFormat:@"%@.follow.facebook", [_trackingPrefix lowercaseString]];
-	_logEvent(eventString, nil);
+	NSString *eventCategory = [_trackingPrefix lowercaseString];
+	NSString *eventAction = @"follow";
+	NSString *eventLabel = @"facebook";
+	NSDictionary *eventParameters = nil;
+	_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
 
     NSURL *url = [NSURL URLWithString:_facebookNativeURL];
 	if ([[UIApplication sharedApplication] canOpenURL:url] == NO)
@@ -475,8 +482,11 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (IBAction)didTapTwitter:(id)sender
 {
-	NSString *eventString = [NSString stringWithFormat:@"%@.follow.twitter", [_trackingPrefix lowercaseString]];
-	_logEvent(eventString, nil);
+	NSString *eventCategory = [_trackingPrefix lowercaseString];
+	NSString *eventAction = @"follow";
+	NSString *eventLabel = @"twitter";
+	NSDictionary *eventParameters = nil;
+	_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
 	
 	NSURL *url = [NSURL URLWithString:_twitterNativeURL];
     if ([[UIApplication sharedApplication] canOpenURL:url] == NO)
@@ -488,8 +498,11 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (IBAction)didTapWebsite:(id)sender
 {
-	NSString *eventString = [NSString stringWithFormat:@"%@.follow.website", [_trackingPrefix lowercaseString]];
-	_logEvent(eventString, nil);
+	NSString *eventCategory = [_trackingPrefix lowercaseString];
+	NSString *eventAction = @"follow";
+	NSString *eventLabel = @"website";
+	NSDictionary *eventParameters = nil;
+	_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
 	
 	NSURL *url = [NSURL URLWithString:_websiteURL];
     [[UIApplication sharedApplication] openURL:url];
@@ -498,8 +511,11 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (IBAction)didTapNewsletter:(id)sender
 {
-	NSString *eventString = [NSString stringWithFormat:@"%@.follow.newsletter", [_trackingPrefix lowercaseString]];
-	_logEvent(eventString, nil);
+	NSString *eventCategory = [_trackingPrefix lowercaseString];
+	NSString *eventAction = @"follow";
+	NSString *eventLabel = @"newsletter";
+	NSDictionary *eventParameters = nil;
+	_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
 	
 	if (!_newsletterApiKey || !_newsletterListID)
 	{
