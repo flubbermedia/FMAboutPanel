@@ -344,6 +344,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		
 	UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     [viewController.view addSubview:self.view];
+	self.view.frame = viewController.view.bounds;
 	// needs to be called after adding the view, otherwise subviews won't have any frame set.
 	[self viewWillAppear:animated];
 	_box.center = _darkView.center;
