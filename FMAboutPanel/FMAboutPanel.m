@@ -74,39 +74,39 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 + (FMAboutPanel *)sharedInstance
 {
-    static FMAboutPanel *sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [FMAboutPanel new];
-    });
-    return sharedInstance;
+	static FMAboutPanel *sharedInstance = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		sharedInstance = [FMAboutPanel new];
+	});
+	return sharedInstance;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    // Force the nib name
-    nibNameOrNil = @"FMAboutPanel~iphone";
-    if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
-    {
-        nibNameOrNil = @"FMAboutPanel~ipad";
-    }
-    
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {        
-        //register for iphone application events
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(applicationLaunched:)
-                                                     name:UIApplicationDidFinishLaunchingNotification
-                                                   object:nil];
-        
-        if (&UIApplicationWillEnterForegroundNotification)
-        {
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(applicationWillEnterForeground:)
-                                                         name:UIApplicationWillEnterForegroundNotification
-                                                       object:nil];
-        }
+	// Force the nib name
+	nibNameOrNil = @"FMAboutPanel~iphone";
+	if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+	{
+		nibNameOrNil = @"FMAboutPanel~ipad";
+	}
+	
+	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+	if (self)
+	{
+		//register for iphone application events
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(applicationLaunched:)
+													 name:UIApplicationDidFinishLaunchingNotification
+												   object:nil];
+		
+		if (&UIApplicationWillEnterForegroundNotification)
+		{
+			[[NSNotificationCenter defaultCenter] addObserver:self
+													 selector:@selector(applicationWillEnterForeground:)
+														 name:UIApplicationWillEnterForegroundNotification
+													   object:nil];
+		}
 		
 		// set defaults
 		_debug = NO;
@@ -144,36 +144,36 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		
 		[self updateApplications];
 		
-    }
-    return self;
+	}
+	return self;
 }
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+	[super viewDidLoad];
 	
 	_logoImageView.image = [UIImage imageNamed:_logoImageName];
-
-	_followUsLabel.text = NSLocalizedString(@"Follow us", @"Flubber Panel: social title");
-    _ourAppsLabel.text = NSLocalizedString(@"Our Apps", @"Flubber Panel: our apps section title");
 	
-    NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+	_followUsLabel.text = NSLocalizedString(@"Follow us", @"Flubber Panel: social title");
+	_ourAppsLabel.text = NSLocalizedString(@"Our Apps", @"Flubber Panel: our apps section title");
+	
+	NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
 	NSString *shortVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+	NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
 	NSString *versionLabelText = nil;
 	if (shortVersion)
 	{
 		versionLabelText = [NSString stringWithFormat:@"%@ v%@ (%@)", appName, shortVersion, version];
 	}
-	else 
+	else
 	{
 		versionLabelText = [NSString stringWithFormat:@"%@ v%@", appName, version];
 	}
 	_appVersionLabel.text = versionLabelText;
 	_infoLabel.text = _copyrightString;
-
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
-    [_darkView addGestureRecognizer:tapGesture];
+	
+	UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
+	[_darkView addGestureRecognizer:tapGesture];
 	
 	if (_newsletterEnabled == NO)
 	{
@@ -190,17 +190,17 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (void)viewDidUnload
 {
-    _box = nil;
-    _darkView = nil;
-    _followUsLabel = nil;
-    _ourAppsLabel = nil;
-    _infoLabel = nil;
-    _facebookButton = nil;
-    _twitterButton = nil;
+	_box = nil;
+	_darkView = nil;
+	_followUsLabel = nil;
+	_ourAppsLabel = nil;
+	_infoLabel = nil;
+	_facebookButton = nil;
+	_twitterButton = nil;
 	_websiteButton = nil;
-    _newsletterButton = nil;
-    _appsScrollView = nil;
-    [super viewDidUnload];
+	_newsletterButton = nil;
+	_appsScrollView = nil;
+	[super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -250,21 +250,21 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		shadowOffset = CGSizeMake(0., 2.);
 	}
 	
-    _appsScrollView.contentSize = CGSizeMake(totalPages * pageSize.width, pageSize.height);
-    _pageControl.numberOfPages = totalPages;
+	_appsScrollView.contentSize = CGSizeMake(totalPages * pageSize.width, pageSize.height);
+	_pageControl.numberOfPages = totalPages;
 	
 	for (int currentIndex = 0; currentIndex < totalWithPlaceholders; currentIndex++)
-    {
+	{
 		CGFloat currentPage = floor(currentIndex / appsPerPage);
 		CGFloat currentIndexPerPage = fmod(currentIndex, appsPerPage);
 		
 		CGRect appBoxFrame = CGRectOffset(boxFrame, pageOffset.width + currentPage * pageSize.width + currentIndexPerPage * (boxFrame.size.width + appOffset.width), pageOffset.height);
 		UIView *appBoxView = [[UIView alloc] initWithFrame:appBoxFrame];
-        appBoxView.layer.borderWidth = boxBorderWidth;
-        appBoxView.layer.cornerRadius = boxCornerRadius;
-        appBoxView.layer.borderColor = [UIColor colorWithRed:22./255. green:22./255. blue:22./255. alpha:1.].CGColor;
-        appBoxView.backgroundColor = [UIColor colorWithRed:51./255. green:51./255. blue:52./255. alpha:1.];
-        [_appsScrollView addSubview:appBoxView];    
+		appBoxView.layer.borderWidth = boxBorderWidth;
+		appBoxView.layer.cornerRadius = boxCornerRadius;
+		appBoxView.layer.borderColor = [UIColor colorWithRed:22./255. green:22./255. blue:22./255. alpha:1.].CGColor;
+		appBoxView.backgroundColor = [UIColor colorWithRed:51./255. green:51./255. blue:52./255. alpha:1.];
+		[_appsScrollView addSubview:appBoxView];
 		
 		if (currentIndex < totalApps)
 		{
@@ -310,25 +310,25 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 			}
 			[appBoxView addSubview:appCover];
 		}
-    }
+	}
 }
 
 #pragma mark - Rotation
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return [[UIApplication sharedApplication].keyWindow.rootViewController shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+	return [[UIApplication sharedApplication].keyWindow.rootViewController shouldAutorotateToInterfaceOrientation:interfaceOrientation];
 }
 
 #pragma mark - Public methods
 
 - (void)present
 {
-    [self presentAnimated:YES];
+	[self presentAnimated:YES];
 }
 
 - (void)presentAnimated:(BOOL)animated
-{    
+{
 	NSString *eventCategory = [_trackingPrefix lowercaseString];
 	NSString *eventAction = nil;
 	NSString *eventLabel = nil;
@@ -341,14 +341,14 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 	{
 		_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
 	}
-		
+	
 	UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    [viewController.view addSubview:self.view];
+	[viewController.view addSubview:self.view];
 	self.view.frame = viewController.view.bounds;
 	// needs to be called after adding the view, otherwise subviews won't have any frame set.
 	[self viewWillAppear:animated];
 	_box.center = _darkView.center;
-
+	
 	void (^animations) (void) = ^{
 		_darkView.alpha = 1.;
 		_box.transform = CGAffineTransformIdentity;
@@ -367,23 +367,23 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		completion(YES);
 		return;
 	}
-
+	
 	_darkView.alpha = 0.;
 	_box.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0., self.view.frame.size.height);
 	
 	[UIView animateWithDuration:.3
-                     animations:animations
-                     completion:completion];
+					 animations:animations
+					 completion:completion];
 }
 
 - (void)dismiss
 {
-    [self dismissAnimated:YES];
+	[self dismissAnimated:YES];
 }
 
 - (void)dismissAnimated:(BOOL)animated
-{	
-    [self viewWillDisappear:animated];
+{
+	[self viewWillDisappear:animated];
 	
 	void (^animations) (void) = ^{
 		_darkView.alpha = 0.;
@@ -405,9 +405,9 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		return;
 	}
 	
-    [UIView animateWithDuration:.3
-                     animations:animations
-                     completion:completion];
+	[UIView animateWithDuration:.3
+					 animations:animations
+					 completion:completion];
 }
 
 #pragma mark - Actions
@@ -421,29 +421,29 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 {
 	
 	NSInteger index = [[(UIButton*)sender superview] tag] - kBoxTag;
-    NSDictionary *app = index < _applications.count ? [_applications objectAtIndex:index] : nil;
-    	
-    //check if the app is installed
-    BOOL found = NO;
-    NSURL *url = nil;
-    NSArray *URLSchemes = [app objectForKey:kPlistURLSchemesKey];
-    for (NSString *URLScheme in URLSchemes)
-    {
-        url = [NSURL URLWithString:URLScheme];
-        
-        if ([[UIApplication sharedApplication] canOpenURL:url])
-        {
-            found = YES;
-            break;
-        }
-    }
-    
-    if (found == NO)
-    {
-        //NSString *urlPath = [NSString stringWithFormat:kAppStoreFormat, [app objectForKey:kFPAppStoreID]];
-        NSString *urlPath = [app objectForKey:kPlistAppStoreURLKey];
-        url = [NSURL URLWithString:urlPath];
-    }
+	NSDictionary *app = index < _applications.count ? [_applications objectAtIndex:index] : nil;
+	
+	//check if the app is installed
+	BOOL found = NO;
+	NSURL *url = nil;
+	NSArray *URLSchemes = [app objectForKey:kPlistURLSchemesKey];
+	for (NSString *URLScheme in URLSchemes)
+	{
+		url = [NSURL URLWithString:URLScheme];
+		
+		if ([[UIApplication sharedApplication] canOpenURL:url])
+		{
+			found = YES;
+			break;
+		}
+	}
+	
+	if (found == NO)
+	{
+		//NSString *urlPath = [NSString stringWithFormat:kAppStoreFormat, [app objectForKey:kFPAppStoreID]];
+		NSString *urlPath = [app objectForKey:kPlistAppStoreURLKey];
+		url = [NSURL URLWithString:urlPath];
+	}
 	
 	NSString *eventCategory = [_trackingPrefix lowercaseString];
 	NSString *eventAction = @"apps";
@@ -471,14 +471,14 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 	NSString *eventLabel = @"facebook";
 	NSDictionary *eventParameters = nil;
 	_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
-
-    NSURL *url = [NSURL URLWithString:_facebookNativeURL];
+	
+	NSURL *url = [NSURL URLWithString:_facebookNativeURL];
 	if ([[UIApplication sharedApplication] canOpenURL:url] == NO)
-    {
-        url = [NSURL URLWithString:_facebookWebURL];
-    }
+	{
+		url = [NSURL URLWithString:_facebookWebURL];
+	}
 	[[UIApplication sharedApplication] openURL:url];
-
+	
 }
 
 - (IBAction)didTapTwitter:(id)sender
@@ -490,9 +490,9 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 	_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
 	
 	NSURL *url = [NSURL URLWithString:_twitterNativeURL];
-    if ([[UIApplication sharedApplication] canOpenURL:url] == NO)
-    {
-        url = [NSURL URLWithString:_twitterWebURL];
+	if ([[UIApplication sharedApplication] canOpenURL:url] == NO)
+	{
+		url = [NSURL URLWithString:_twitterWebURL];
 	}
 	[[UIApplication sharedApplication] openURL:url];
 }
@@ -506,7 +506,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 	_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
 	
 	NSURL *url = [NSURL URLWithString:_websiteURL];
-    [[UIApplication sharedApplication] openURL:url];
+	[[UIApplication sharedApplication] openURL:url];
 	
 }
 
@@ -524,11 +524,11 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		return;
 	}
 	_newsletterSignupAlertView = [[UIAlertView alloc] initWithTitle:@"Subscribe"
-																message:@"Enter your email address to subscribe to our mailing list."
-															   delegate:self
-													  cancelButtonTitle:@"Cancel"
-													  otherButtonTitles:@"Subscribe", nil ];
-
+															message:@"Enter your email address to subscribe to our mailing list."
+														   delegate:self
+												  cancelButtonTitle:@"Cancel"
+												  otherButtonTitles:@"Subscribe", nil ];
+	
 	_newsletterSignupAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
 	
 	_newsletterSignupTextField = [_newsletterSignupAlertView textFieldAtIndex:0];
@@ -547,17 +547,17 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (void)updateApplications
 {
-    NSString *appsFilePath = [[self privateDataPath] stringByAppendingPathComponent:kApplicationsLocalPlistFilename];
-    NSDictionary *content = [NSDictionary dictionaryWithContentsOfFile:appsFilePath];
-    _applications = [content objectForKey:kPlistApplicationsKey];
-    _applicationsPlistVersion = [content objectForKey:@"version"];
+	NSString *appsFilePath = [[self privateDataPath] stringByAppendingPathComponent:kApplicationsLocalPlistFilename];
+	NSDictionary *content = [NSDictionary dictionaryWithContentsOfFile:appsFilePath];
+	_applications = [content objectForKey:kPlistApplicationsKey];
+	_applicationsPlistVersion = [content objectForKey:@"version"];
 }
 
 - (BOOL)shouldLoadApplicationsLocalData
 {
-    NSString *appsFilePath = [[self privateDataPath] stringByAppendingPathComponent:kApplicationsLocalPlistFilename];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:appsFilePath])
-    {
+	NSString *appsFilePath = [[self privateDataPath] stringByAppendingPathComponent:kApplicationsLocalPlistFilename];
+	if ([[NSFileManager defaultManager] fileExistsAtPath:appsFilePath])
+	{
 		//there's already a file
 		return NO;
 	}
@@ -585,25 +585,25 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (void)loadApplicationsRemoteData
 {
-    //start downloading the remote applications.plist
+	//start downloading the remote applications.plist
 	
 	NSString *urlParameters = [NSString stringWithFormat:kApplicationsRemoteRequestFormat,
-                               [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"],
-                               [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"],
-                               [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode],
-                               [[UIDevice currentDevice] model],
-                               _applicationsPlistVersion
-                               ];
+							   [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"],
+							   [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"],
+							   [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode],
+							   [[UIDevice currentDevice] model],
+							   _applicationsPlistVersion
+							   ];
 	
 	urlParameters = [urlParameters stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-    NSString *urlPath = [_applicationsRemoteBaseURL stringByAppendingString:urlParameters];
-    
-    NSURL *url = [NSURL URLWithString:urlPath];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:20];
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue new]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {                               
-                               if (error == nil)
+	NSString *urlPath = [_applicationsRemoteBaseURL stringByAppendingString:urlParameters];
+	
+	NSURL *url = [NSURL URLWithString:urlPath];
+	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:20];
+	[NSURLConnection sendAsynchronousRequest:request
+									   queue:[NSOperationQueue new]
+						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+							   if (error == nil)
 							   {
 								   // Response received: update request date
 								   [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kApplicationsRemoteLastCheckDateKey];
@@ -632,65 +632,65 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 							   {
 								   //NSLog(@"Error: %@", [error localizedDescription]);
 							   }
-                           }];
+						   }];
 }
 
 - (void)unzipData:(NSData *)zipData
 {
-    //write temporary the data to disk
-    NSString *tempZipDataPath = [[self privateDataPath] stringByAppendingPathComponent:kApplicationsTempZipFilename];
-    [zipData writeToFile:tempZipDataPath atomically:YES];
-    
-    ZipFile *unzipFile = nil;
-    @try
-    {
-        //open the zip file
-        unzipFile = [[ZipFile alloc] initWithFileName:tempZipDataPath mode:ZipFileModeUnzip];
-    }
-    @catch (NSException *exception)
-    {
-        //something went wrong and the file is not a zip, leave this method
-        return;
-    }
-    
-    //list the files in the zip file
-    NSArray *infos = [unzipFile listFileInZipInfos];
-    for (FileInZipInfo *info in infos) {
-        if (![info.name hasPrefix:@"_"])
-        {
-            // Locate the file in the zip
-            [unzipFile locateFileInZip:info.name];
-            
-            // Expand the file in memory
-            ZipReadStream *read = [unzipFile readCurrentFileInZip];
-            NSMutableData *data = [[NSMutableData alloc] initWithLength:info.length];
-            [read readDataWithBuffer:data];
-            [read finishedReading];
-            
-            // Write the file to disk
-            NSString *filePath = [[self privateDataPath] stringByAppendingPathComponent:info.name];
-            [data writeToFile:filePath atomically:YES];
-        }
-    }
-    
-    //close the zip file
-    [unzipFile close];
-    
-    //delete the temporary data on disk
-    [[NSFileManager defaultManager] removeItemAtPath:tempZipDataPath error:nil];
+	//write temporary the data to disk
+	NSString *tempZipDataPath = [[self privateDataPath] stringByAppendingPathComponent:kApplicationsTempZipFilename];
+	[zipData writeToFile:tempZipDataPath atomically:YES];
+	
+	ZipFile *unzipFile = nil;
+	@try
+	{
+		//open the zip file
+		unzipFile = [[ZipFile alloc] initWithFileName:tempZipDataPath mode:ZipFileModeUnzip];
+	}
+	@catch (NSException *exception)
+	{
+		//something went wrong and the file is not a zip, leave this method
+		return;
+	}
+	
+	//list the files in the zip file
+	NSArray *infos = [unzipFile listFileInZipInfos];
+	for (FileInZipInfo *info in infos) {
+		if (![info.name hasPrefix:@"_"])
+		{
+			// Locate the file in the zip
+			[unzipFile locateFileInZip:info.name];
+			
+			// Expand the file in memory
+			ZipReadStream *read = [unzipFile readCurrentFileInZip];
+			NSMutableData *data = [[NSMutableData alloc] initWithLength:info.length];
+			[read readDataWithBuffer:data];
+			[read finishedReading];
+			
+			// Write the file to disk
+			NSString *filePath = [[self privateDataPath] stringByAppendingPathComponent:info.name];
+			[data writeToFile:filePath atomically:YES];
+		}
+	}
+	
+	//close the zip file
+	[unzipFile close];
+	
+	//delete the temporary data on disk
+	[[NSFileManager defaultManager] removeItemAtPath:tempZipDataPath error:nil];
 }
 
 - (NSString *)privateDataPath
 {
-    //application support folder
+	//application support folder
 	NSString *folder = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
-    
-    //create the folder if it doesn't exist
+	
+	//create the folder if it doesn't exist
 	if (![[NSFileManager defaultManager] fileExistsAtPath:folder])
-    {
+	{
 		[[NSFileManager defaultManager] createDirectoryAtPath:folder withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
-    
+	
 	return folder;
 }
 
@@ -707,7 +707,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 - (void)applicationWillEnterForeground:(NSNotification *)notification
 {
 	if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground)
-    {
+	{
 		if ([self shouldLoadApplicationsRemoteData])
 		{
 			[self loadApplicationsRemoteData];
@@ -736,7 +736,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (void)openReferralURL:(NSURL *)referralURL
 {
-    _iTunesConnection = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:referralURL] delegate:self startImmediately:YES];
+	_iTunesConnection = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:referralURL] delegate:self startImmediately:YES];
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
@@ -744,12 +744,12 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 // "iTunesURL" is an NSURL property in your class declaration
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
 {
-    _iTunesURL = [response URL];
-    if( [_iTunesURL.host hasSuffix:@"itunes.apple.com"])
-    {
-        [self cancelConnection:connection];
-        [self connectionDidFinishLoading:connection];
-        return nil;
+	_iTunesURL = [response URL];
+	if( [_iTunesURL.host hasSuffix:@"itunes.apple.com"])
+	{
+		[self cancelConnection:connection];
+		[self connectionDidFinishLoading:connection];
+		return nil;
 	}
 	else
 	{
@@ -760,7 +760,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 // No more redirects; use the last URL saved
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    [[UIApplication sharedApplication] openURL:_iTunesURL];
+	[[UIApplication sharedApplication] openURL:_iTunesURL];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
@@ -782,7 +782,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (IBAction)didTapPageControl:(id)sender
 {
-    int currentPage = _pageControl.currentPage;
+	int currentPage = _pageControl.currentPage;
 	CGRect rect = _appsScrollView.bounds;
 	rect.origin.x = _appsScrollView.bounds.size.width * currentPage;
 	[_appsScrollView scrollRectToVisible:rect animated:YES];
@@ -790,41 +790,41 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat width = scrollView.bounds.size.width;
-    int currentPage = floor((scrollView.contentOffset.x - width * 0.5) / width) + 1;
+	CGFloat width = scrollView.bounds.size.width;
+	int currentPage = floor((scrollView.contentOffset.x - width * 0.5) / width) + 1;
 	_pageControl.currentPage = currentPage;
 }
 
 #pragma mark - ChimpKit Delegate Methods
 
 - (void)showSubscribeError {
-    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Subscription Failed"
-                                                             message:@"We couldn't subscribe you to the list. Please check your email address and try again."
-                                                            delegate:nil
-                                                   cancelButtonTitle:@"OK"
-                                                   otherButtonTitles:nil];
-    [errorAlertView show];
+	UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Subscription Failed"
+															 message:@"We couldn't subscribe you to the list. Please check your email address and try again."
+															delegate:nil
+												   cancelButtonTitle:@"OK"
+												   otherButtonTitles:nil];
+	[errorAlertView show];
 }
 
 - (void)ckRequestSucceeded:(ChimpKit *)ckRequest {
-    if (![ckRequest.responseString isEqualToString:@"true"]) {
-        [self showSubscribeError];
-    }
+	if (![ckRequest.responseString isEqualToString:@"true"]) {
+		[self showSubscribeError];
+	}
 }
 
 - (void)ckRequestFailed:(NSError *)error {
-    [self showSubscribeError];
+	[self showSubscribeError];
 }
 
 #pragma mark - ChimpKit
 
 - (void)chimpKitSubscribe
 {
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+	NSMutableDictionary *params = [NSMutableDictionary dictionary];
 	[params setValue:@"true" forKey:@"update_existing"];
-    [params setValue:_newsletterListID forKey:@"id"];
-    [params setValue:_newsletterSignupTextField.text forKey:@"email_address"];
-    [params setValue:(_newsletterDoubleOptIn ? @"true" : @"false") forKey:@"double_optin"];
+	[params setValue:_newsletterListID forKey:@"id"];
+	[params setValue:_newsletterSignupTextField.text forKey:@"email_address"];
+	[params setValue:(_newsletterDoubleOptIn ? @"true" : @"false") forKey:@"double_optin"];
 	if (_newsletterListGroup && _newsletterListGroupOption)
 	{
 		NSArray *grouping = [NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -838,24 +838,24 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		[params setValue:mergeVars forKey:@"merge_vars"];
 		[params setValue:@"false" forKey:@"replace_interests"];
 	}
-    ChimpKit *chimpKit = [[ChimpKit alloc] initWithDelegate:self andApiKey:_newsletterApiKey];
+	ChimpKit *chimpKit = [[ChimpKit alloc] initWithDelegate:self andApiKey:_newsletterApiKey];
 	[chimpKit callApiMethod:@"listSubscribe" withParams:params];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (alertView == _newsletterSignupAlertView && buttonIndex == 1)
-    {
-        // Subscribe pressed
-        [self chimpKitSubscribe];
-    }
+	if (alertView == _newsletterSignupAlertView && buttonIndex == 1)
+	{
+		// Subscribe pressed
+		[self chimpKitSubscribe];
+	}
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)aTextField
 {
 	if (aTextField == _newsletterSignupTextField)
 	{        
-        [_newsletterSignupAlertView dismissWithClickedButtonIndex:1 animated:YES];
+		[_newsletterSignupAlertView dismissWithClickedButtonIndex:1 animated:YES];
 		return NO;
 	}
 	return YES;
