@@ -58,7 +58,6 @@ static NSString * const kTwitterNativeURL = @"twitter://user?screen_name=flubber
 static NSString * const kWebsiteURL = @"http://flubbermedia.com";
 static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll rights reserved";
 
-
 @interface FMAboutPanel ()
 
 @property (strong, nonatomic) NSURLConnection *iTunesConnection;
@@ -67,6 +66,19 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 @property (strong, nonatomic) NSString *applicationsPlistVersion;
 @property (strong, nonatomic) UIAlertView *newsletterSignupAlertView;
 @property (strong, nonatomic) UITextField *newsletterSignupTextField;
+
+@property (strong, nonatomic) NSString *textPanelFollow;
+@property (strong, nonatomic) NSString *textPanelApps;
+@property (strong, nonatomic) NSString *textPanelAppsAlertNoConnection;
+@property (strong, nonatomic) NSString *textPanelAppsAlertDismiss;
+@property (strong, nonatomic) NSString *textNewsletterSubscribeAlertTitle;
+@property (strong, nonatomic) NSString *textNewsletterSubscribeAlertMessage;
+@property (strong, nonatomic) NSString *textNewsletterSubscribeAlertButtonSubscribe;
+@property (strong, nonatomic) NSString *textNewsletterSubscribeAlertButtonDismiss;
+@property (strong, nonatomic) NSString *textNewsletterSubscribeAlertFieldPlaceholder;
+@property (strong, nonatomic) NSString *textNewsletterFailAlertTitle;
+@property (strong, nonatomic) NSString *textNewsletterFailAlertMessage;
+@property (strong, nonatomic) NSString *textNewsletterFailAlertDismiss;
 
 @end
 
@@ -136,6 +148,20 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 			NSLog(@"*** Warning: Tracking Block Missing for page:%@|parameters:%@", page, parameters);
 		};
 		
+		// text
+		_textPanelFollow = NSLocalizedString(@"Follow us", @"Flubber Panel: Label for section with social links");
+		_textPanelApps = NSLocalizedString(@"Our Apps", @"Flubber Panel: Label for section with other apps");
+		_textPanelAppsAlertNoConnection = NSLocalizedString(@"You need an Internet connection to download this App", @"Flubber Panel: Message when user taps on an App but is not connected to Internet");
+		_textPanelAppsAlertDismiss = NSLocalizedString(@"OK", @"Flubber Panel: Label on button to dismiss the \"no connection\" alert");
+		_textNewsletterSubscribeAlertTitle = NSLocalizedString(@"Subscribe", @"Flubber Panel: Title for the alert to subscribe to the newsletter");
+		_textNewsletterSubscribeAlertMessage = NSLocalizedString(@"Enter your email address to subscribe to our mailing list.", @"Flubber Panel: Message for the alert to subscribe to the newsletter");
+		_textNewsletterSubscribeAlertButtonSubscribe = NSLocalizedString(@"Subscribe", @"Flubber Panel: Label on the button to subscribe to the newsletter");
+		_textNewsletterSubscribeAlertButtonDismiss = NSLocalizedString(@"Cancel", @"Flubber Panel: Label on the button to cancel the subscription to the newsletter");
+		_textNewsletterSubscribeAlertFieldPlaceholder = NSLocalizedString(@"Email Address", @"Flubber Panel: Placeholder text for the email field");
+		_textNewsletterFailAlertTitle = NSLocalizedString(@"Subscription Failed", @"Flubber Panel: Title for the alert displayed when the signup fails");
+		_textNewsletterFailAlertMessage = NSLocalizedString(@"We couldn't subscribe you to the list. Please check your email address and try again.", @"Flubber Panel: Message for the alert displayed when the signup fails");
+		_textNewsletterFailAlertDismiss = NSLocalizedString(@"OK", @"Flubber Panel: Label on the button to dismiss the alert displayed when the signup fails");
+		
 		// initialize local data
 		if ([self shouldLoadApplicationsLocalData])
 		{
@@ -154,8 +180,8 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 	
 	_logoImageView.image = [UIImage imageNamed:_logoImageName];
 	
-	_followUsLabel.text = NSLocalizedString(@"Follow us", @"Flubber Panel: social title");
-	_ourAppsLabel.text = NSLocalizedString(@"Our Apps", @"Flubber Panel: our apps section title");
+	_followUsLabel.text = _textPanelFollow;
+	_ourAppsLabel.text = _textPanelApps;
 	
 	NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
 	NSString *shortVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
@@ -523,11 +549,11 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		NSLog(@"Warning: Newsletter ApiKey or ListID missing");
 		return;
 	}
-	_newsletterSignupAlertView = [[UIAlertView alloc] initWithTitle:@"Subscribe"
-															message:@"Enter your email address to subscribe to our mailing list."
+	_newsletterSignupAlertView = [[UIAlertView alloc] initWithTitle:_textNewsletterSubscribeAlertTitle
+															message:_textNewsletterSubscribeAlertMessage
 														   delegate:self
-												  cancelButtonTitle:@"Cancel"
-												  otherButtonTitles:@"Subscribe", nil ];
+												  cancelButtonTitle:_textNewsletterSubscribeAlertButtonDismiss
+												  otherButtonTitles:_textNewsletterSubscribeAlertButtonSubscribe, nil ];
 	
 	_newsletterSignupAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
 	
@@ -535,7 +561,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 	
 	// Common text field properties
 	_newsletterSignupTextField.delegate = self;
-	_newsletterSignupTextField.placeholder = @"Email Address";
+	_newsletterSignupTextField.placeholder = _textNewsletterSubscribeAlertFieldPlaceholder;
 	_newsletterSignupTextField.keyboardType = UIKeyboardTypeEmailAddress;
 	_newsletterSignupTextField.autocorrectionType = UITextAutocorrectionTypeNo;
 	_newsletterSignupTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -765,9 +791,9 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-	NSString *alertTitle = @"You need an Internet connection to download this App";
+	NSString *alertTitle = _textPanelAppsAlertNoConnection;
 	NSString *alertMessage = nil;
-	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertTitle message:alertMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertTitle message:alertMessage delegate:nil cancelButtonTitle:_textPanelAppsAlertDismiss otherButtonTitles:nil];
 	[alertView show];
 	[self cancelConnection:connection];
 }
@@ -798,10 +824,10 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 #pragma mark - ChimpKit Delegate Methods
 
 - (void)showSubscribeError {
-	UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Subscription Failed"
-															 message:@"We couldn't subscribe you to the list. Please check your email address and try again."
+	UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:_textNewsletterFailAlertTitle
+															 message:_textNewsletterFailAlertMessage
 															delegate:nil
-												   cancelButtonTitle:@"OK"
+												   cancelButtonTitle:_textNewsletterFailAlertDismiss
 												   otherButtonTitles:nil];
 	[errorAlertView show];
 }
