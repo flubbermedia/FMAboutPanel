@@ -17,6 +17,9 @@
 {
     //Pre-initialize the panel
     [FMAboutPanel sharedInstance];
+	[FMAboutPanel sharedInstance].newsletterEnabled = YES;
+	[FMAboutPanel sharedInstance].newsletterApiKey = @"example";
+	[FMAboutPanel sharedInstance].newsletterListID = @"example";
     
     return YES;
 }
