@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1536</int>
-		<string key="IBDocument.SystemVersion">11E53</string>
+		<int key="IBDocument.SystemTarget">1280</int>
+		<string key="IBDocument.SystemVersion">12C54</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2840</string>
-		<string key="IBDocument.AppKitVersion">1138.47</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<string key="IBDocument.AppKitVersion">1187.34</string>
+		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">1926</string>
@@ -124,7 +124,7 @@
 							<object class="IBUILabel" id="456290945">
 								<reference key="NSNextResponder" ref="475364993"/>
 								<int key="NSvFlags">290</int>
-								<string key="NSFrame">{{34, 206}, {160, 24}}</string>
+								<string key="NSFrame">{{34, 206}, {148, 24}}</string>
 								<reference key="NSSuperview" ref="475364993"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="641851591"/>
@@ -164,7 +164,7 @@
 							<object class="IBUIButton" id="641851591">
 								<reference key="NSNextResponder" ref="475364993"/>
 								<int key="NSvFlags">289</int>
-								<string key="NSFrame">{{178, 206}, {64, 64}}</string>
+								<string key="NSFrame">{{190, 206}, {64, 64}}</string>
 								<reference key="NSSuperview" ref="475364993"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="308395063"/>
@@ -189,7 +189,7 @@
 							<object class="IBUIButton" id="308395063">
 								<reference key="NSNextResponder" ref="475364993"/>
 								<int key="NSvFlags">289</int>
-								<string key="NSFrame">{{258, 206}, {64, 64}}</string>
+								<string key="NSFrame">{{266, 206}, {64, 64}}</string>
 								<reference key="NSSuperview" ref="475364993"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="556670896"/>
@@ -239,7 +239,7 @@
 							<object class="IBUIButton" id="556670896">
 								<reference key="NSNextResponder" ref="475364993"/>
 								<int key="NSvFlags">289</int>
-								<string key="NSFrame">{{338, 206}, {64, 64}}</string>
+								<string key="NSFrame">{{342, 206}, {64, 64}}</string>
 								<reference key="NSSuperview" ref="475364993"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="283103686"/>
@@ -264,7 +264,7 @@
 							<object class="IBUILabel" id="667119337">
 								<reference key="NSNextResponder" ref="475364993"/>
 								<int key="NSvFlags">290</int>
-								<string key="NSFrame">{{34, 310}, {160, 24}}</string>
+								<string key="NSFrame">{{34, 310}, {300, 24}}</string>
 								<reference key="NSSuperview" ref="475364993"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="235428187"/>
@@ -280,9 +280,9 @@
 								<reference key="IBUIShadowColor" ref="358229374"/>
 								<string key="IBUIShadowOffset">{0, -2}</string>
 								<int key="IBUIBaselineAdjustment">0</int>
-								<float key="IBUIMinimumFontSize">10</float>
 								<reference key="IBUIFontDescription" ref="1018232896"/>
 								<reference key="IBUIFont" ref="658338508"/>
+								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 							<object class="IBUIScrollView" id="235428187">
 								<reference key="NSNextResponder" ref="475364993"/>
@@ -748,17 +748,45 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">FMAboutPanel</string>
 					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">didTapClose:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">didTapClose:</string>
-						<object class="IBActionInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="didTapApp:">id</string>
+						<string key="didTapClose:">id</string>
+						<string key="didTapFacebook:">id</string>
+						<string key="didTapNewsletter:">id</string>
+						<string key="didTapPageControl:">id</string>
+						<string key="didTapTwitter:">id</string>
+						<string key="didTapWebsite:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="didTapApp:">
+							<string key="name">didTapApp:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapClose:">
 							<string key="name">didTapClose:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+						<object class="IBActionInfo" key="didTapFacebook:">
+							<string key="name">didTapFacebook:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapNewsletter:">
+							<string key="name">didTapNewsletter:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapPageControl:">
+							<string key="name">didTapPageControl:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapTwitter:">
+							<string key="name">didTapTwitter:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapWebsite:">
+							<string key="name">didTapWebsite:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="appVersionLabel">UILabel</string>
 						<string key="appsScrollView">UIScrollView</string>
@@ -837,6 +865,10 @@
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBIPadFramework</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
+			<real value="1280" key="NS.object.0"/>
+		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
 			<real value="1536" key="NS.object.0"/>

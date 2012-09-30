@@ -89,6 +89,11 @@
 		14FD2A3215BF1D0100FEE5C4 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2A15BF1D0100FEE5C4 /* Icon.png */; };
 		14FD2A3315BF1D0100FEE5C4 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2B15BF1D0100FEE5C4 /* Icon@2x.png */; };
 		653B1EDE15E9AD0A006A091F /* ChimpKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 653B1EDB15E9AD0A006A091F /* ChimpKit.m */; };
+		65CE89E11617E39A009569A2 /* FMAboutPanel.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65CE89D31617E39A009569A2 /* FMAboutPanel.strings */; };
+		65CE89E21617E39A009569A2 /* FMAboutPanel.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65CE89D61617E39A009569A2 /* FMAboutPanel.strings */; };
+		65CE89E31617E39B009569A2 /* FMAboutPanel.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65CE89D91617E39A009569A2 /* FMAboutPanel.strings */; };
+		65CE89E41617E39B009569A2 /* FMAboutPanel.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65CE89DC1617E39A009569A2 /* FMAboutPanel.strings */; };
+		65CE89E51617E39B009569A2 /* FMAboutPanel.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65CE89DF1617E39A009569A2 /* FMAboutPanel.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -204,6 +209,11 @@
 		14FD2A2B15BF1D0100FEE5C4 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		653B1EDA15E9AD0A006A091F /* ChimpKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChimpKit.h; sourceTree = "<group>"; };
 		653B1EDB15E9AD0A006A091F /* ChimpKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChimpKit.m; sourceTree = "<group>"; };
+		65CE89D41617E39A009569A2 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = FMAboutPanel.strings; sourceTree = "<group>"; };
+		65CE89D71617E39A009569A2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = FMAboutPanel.strings; sourceTree = "<group>"; };
+		65CE89DA1617E39A009569A2 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = FMAboutPanel.strings; sourceTree = "<group>"; };
+		65CE89DD1617E39A009569A2 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = FMAboutPanel.strings; sourceTree = "<group>"; };
+		65CE89E01617E39A009569A2 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = FMAboutPanel.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,6 +299,11 @@
 		14B281DE15BEF11D0030CAC5 /* FMAboutPanel.resources */ = {
 			isa = PBXGroup;
 			children = (
+				65CE89D21617E39A009569A2 /* de.lproj */,
+				65CE89D51617E39A009569A2 /* en.lproj */,
+				65CE89D81617E39A009569A2 /* es.lproj */,
+				65CE89DB1617E39A009569A2 /* fr.lproj */,
+				65CE89DE1617E39A009569A2 /* it.lproj */,
 				14B281DF15BEF11D0030CAC5 /* applications.zip */,
 				14B281E015BEF11D0030CAC5 /* bg-flubber-panel@2x~ipad.png */,
 				14B281E115BEF11D0030CAC5 /* bg-flubber-panel@2x~iphone.png */,
@@ -435,6 +450,46 @@
 			path = ChimpKit;
 			sourceTree = "<group>";
 		};
+		65CE89D21617E39A009569A2 /* de.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				65CE89D31617E39A009569A2 /* FMAboutPanel.strings */,
+			);
+			path = de.lproj;
+			sourceTree = "<group>";
+		};
+		65CE89D51617E39A009569A2 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				65CE89D61617E39A009569A2 /* FMAboutPanel.strings */,
+			);
+			path = en.lproj;
+			sourceTree = "<group>";
+		};
+		65CE89D81617E39A009569A2 /* es.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				65CE89D91617E39A009569A2 /* FMAboutPanel.strings */,
+			);
+			path = es.lproj;
+			sourceTree = "<group>";
+		};
+		65CE89DB1617E39A009569A2 /* fr.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				65CE89DC1617E39A009569A2 /* FMAboutPanel.strings */,
+			);
+			path = fr.lproj;
+			sourceTree = "<group>";
+		};
+		65CE89DE1617E39A009569A2 /* it.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				65CE89DF1617E39A009569A2 /* FMAboutPanel.strings */,
+			);
+			path = it.lproj;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -470,6 +525,10 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				de,
+				es,
+				fr,
+				it,
 			);
 			mainGroup = 14B281AC15BEF1040030CAC5;
 			productRefGroup = 14B281B815BEF1040030CAC5 /* Products */;
@@ -536,6 +595,11 @@
 				14FD2A3115BF1D0100FEE5C4 /* Icon-72@2x.png in Resources */,
 				14FD2A3215BF1D0100FEE5C4 /* Icon.png in Resources */,
 				14FD2A3315BF1D0100FEE5C4 /* Icon@2x.png in Resources */,
+				65CE89E11617E39A009569A2 /* FMAboutPanel.strings in Resources */,
+				65CE89E21617E39A009569A2 /* FMAboutPanel.strings in Resources */,
+				65CE89E31617E39B009569A2 /* FMAboutPanel.strings in Resources */,
+				65CE89E41617E39B009569A2 /* FMAboutPanel.strings in Resources */,
+				65CE89E51617E39B009569A2 /* FMAboutPanel.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,6 +667,46 @@
 				14B281D115BEF1040030CAC5 /* en */,
 			);
 			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		65CE89D31617E39A009569A2 /* FMAboutPanel.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65CE89D41617E39A009569A2 /* de */,
+			);
+			name = FMAboutPanel.strings;
+			sourceTree = "<group>";
+		};
+		65CE89D61617E39A009569A2 /* FMAboutPanel.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65CE89D71617E39A009569A2 /* en */,
+			);
+			name = FMAboutPanel.strings;
+			sourceTree = "<group>";
+		};
+		65CE89D91617E39A009569A2 /* FMAboutPanel.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65CE89DA1617E39A009569A2 /* es */,
+			);
+			name = FMAboutPanel.strings;
+			sourceTree = "<group>";
+		};
+		65CE89DC1617E39A009569A2 /* FMAboutPanel.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65CE89DD1617E39A009569A2 /* fr */,
+			);
+			name = FMAboutPanel.strings;
+			sourceTree = "<group>";
+		};
+		65CE89DF1617E39A009569A2 /* FMAboutPanel.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65CE89E01617E39A009569A2 /* it */,
+			);
+			name = FMAboutPanel.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

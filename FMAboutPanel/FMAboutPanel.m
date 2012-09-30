@@ -149,18 +149,18 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		};
 		
 		// text
-		_textPanelFollow = NSLocalizedString(@"Follow us", @"Flubber Panel: Label for section with social links");
-		_textPanelApps = NSLocalizedString(@"Our Apps", @"Flubber Panel: Label for section with other apps");
-		_textPanelAppsAlertNoConnection = NSLocalizedString(@"You need an Internet connection to download this App", @"Flubber Panel: Message when user taps on an App but is not connected to Internet");
-		_textPanelAppsAlertDismiss = NSLocalizedString(@"OK", @"Flubber Panel: Label on button to dismiss the \"no connection\" alert");
-		_textNewsletterSubscribeAlertTitle = NSLocalizedString(@"Subscribe", @"Flubber Panel: Title for the alert to subscribe to the newsletter");
-		_textNewsletterSubscribeAlertMessage = NSLocalizedString(@"Enter your email address to subscribe to our mailing list.", @"Flubber Panel: Message for the alert to subscribe to the newsletter");
-		_textNewsletterSubscribeAlertButtonSubscribe = NSLocalizedString(@"Subscribe", @"Flubber Panel: Label on the button to subscribe to the newsletter");
-		_textNewsletterSubscribeAlertButtonDismiss = NSLocalizedString(@"Cancel", @"Flubber Panel: Label on the button to cancel the subscription to the newsletter");
-		_textNewsletterSubscribeAlertFieldPlaceholder = NSLocalizedString(@"Email Address", @"Flubber Panel: Placeholder text for the email field");
-		_textNewsletterFailAlertTitle = NSLocalizedString(@"Subscription Failed", @"Flubber Panel: Title for the alert displayed when the signup fails");
-		_textNewsletterFailAlertMessage = NSLocalizedString(@"We couldn't subscribe you to the list. Please check your email address and try again.", @"Flubber Panel: Message for the alert displayed when the signup fails");
-		_textNewsletterFailAlertDismiss = NSLocalizedString(@"OK", @"Flubber Panel: Label on the button to dismiss the alert displayed when the signup fails");
+		_textPanelFollow = NSLocalizedStringFromTable(@"Follow us", @"FMAboutPanel", @"Flubber Panel: Label for section with social links");
+		_textPanelApps = NSLocalizedStringFromTable(@"Our Apps", @"FMAboutPanel", @"Flubber Panel: Label for section with other apps");
+		_textPanelAppsAlertNoConnection = NSLocalizedStringFromTable(@"You need an Internet connection to download this App", @"FMAboutPanel", @"Flubber Panel: Message when user taps on an App but is not connected to Internet");
+		_textPanelAppsAlertDismiss = NSLocalizedStringFromTable(@"OK", @"FMAboutPanel", @"Flubber Panel: Label on button to dismiss the \"no connection\" alert");
+		_textNewsletterSubscribeAlertTitle = NSLocalizedStringFromTable(@"Subscribe", @"FMAboutPanel", @"Flubber Panel: Title for the alert to subscribe to the newsletter");
+		_textNewsletterSubscribeAlertMessage = NSLocalizedStringFromTable(@"Enter your email address to subscribe to our mailing list.", @"FMAboutPanel", @"Flubber Panel: Message for the alert to subscribe to the newsletter");
+		_textNewsletterSubscribeAlertButtonSubscribe = NSLocalizedStringFromTable(@"Subscribe", @"FMAboutPanel", @"Flubber Panel: Label on the button to subscribe to the newsletter");
+		_textNewsletterSubscribeAlertButtonDismiss = NSLocalizedStringFromTable(@"Cancel", @"FMAboutPanel", @"Flubber Panel: Label on the button to cancel the subscription to the newsletter");
+		_textNewsletterSubscribeAlertFieldPlaceholder = NSLocalizedStringFromTable(@"Email Address", @"FMAboutPanel", @"Flubber Panel: Placeholder text for the email field");
+		_textNewsletterFailAlertTitle = NSLocalizedStringFromTable(@"Subscription Failed", @"FMAboutPanel", @"Flubber Panel: Title for the alert displayed when the signup fails");
+		_textNewsletterFailAlertMessage = NSLocalizedStringFromTable(@"We couldn't subscribe you to the list. Please check your email address and try again.", @"FMAboutPanel", @"Flubber Panel: Message for the alert displayed when the signup fails");
+		_textNewsletterFailAlertDismiss = NSLocalizedStringFromTable(@"OK", @"FMAboutPanel", @"Flubber Panel: Label on the button to dismiss the alert displayed when the signup fails");
 		
 		// initialize local data
 		if ([self shouldLoadApplicationsLocalData])
