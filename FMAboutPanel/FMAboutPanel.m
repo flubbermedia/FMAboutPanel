@@ -52,7 +52,7 @@ static NSString * const kTrackingPrefix = @"page.flubberpanel";
 
 static NSString * const kLogoImageName = @"flubber-panel-logo.png";
 static NSString * const kFacebookWebURL = @"https://www.facebook.com/flubbermedia";
-static NSString * const kFacebookNativeURL = @"fb://page/327002840656323";
+static NSString * const kFacebookNativeURL = @"fb://profile/327002840656323";
 static NSString * const kTwitterWebURL = @"https://twitter.com/#!/flubbermedia";
 static NSString * const kTwitterNativeURL = @"twitter://user?screen_name=flubbermedia";
 static NSString * const kWebsiteURL = @"http://flubbermedia.com";
