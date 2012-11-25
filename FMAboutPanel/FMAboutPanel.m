@@ -96,7 +96,11 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-	// Force the nib name
+    //check if the zip pack exists
+    BOOL localZipExists = [[NSFileManager defaultManager] fileExistsAtPath:[self localZipContentFilePath]];
+    NSAssert(localZipExists, @"FMAboutPanel couldn't find the applications.zip file");
+    
+	//force the nib name
 	nibNameOrNil = @"FMAboutPanel~iphone";
 	if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
 	{
@@ -593,8 +597,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (void)loadApplicationsLocalData
 {
-	NSString *zipContentFilePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:kApplicationsLocalZipFilename];
-	NSData *contentData = [NSData dataWithContentsOfFile:zipContentFilePath];
+	NSData *contentData = [NSData dataWithContentsOfFile:[self localZipContentFilePath]];
 	[self unzipData:contentData];
 }
 
@@ -704,6 +707,11 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 	
 	//delete the temporary data on disk
 	[[NSFileManager defaultManager] removeItemAtPath:tempZipDataPath error:nil];
+}
+
+- (NSString *)localZipContentFilePath
+{
+    return [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:kApplicationsLocalZipFilename];
 }
 
 - (NSString *)privateDataPath
