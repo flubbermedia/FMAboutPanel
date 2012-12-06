@@ -56,7 +56,9 @@ static NSString * const kFacebookNativeURL = @"fb://profile/327002840656323";
 static NSString * const kTwitterWebURL = @"https://twitter.com/#!/flubbermedia";
 static NSString * const kTwitterNativeURL = @"twitter://user?screen_name=flubbermedia";
 static NSString * const kWebsiteURL = @"http://flubbermedia.com";
+static NSString * const kSupportEmail = @"support@flubbermedia.com";
 static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll rights reserved";
+
 
 @interface FMAboutPanel ()
 
@@ -67,7 +69,9 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 @property (strong, nonatomic) UIAlertView *newsletterSignupAlertView;
 @property (strong, nonatomic) UITextField *newsletterSignupTextField;
 
+@property (strong, nonatomic) NSString *textAppVersion;
 @property (strong, nonatomic) NSString *textPanelFollow;
+@property (strong, nonatomic) NSString *textPanelSupport;
 @property (strong, nonatomic) NSString *textPanelApps;
 @property (strong, nonatomic) NSString *textPanelAppsAlertNoConnection;
 @property (strong, nonatomic) NSString *textPanelAppsAlertDismiss;
@@ -95,8 +99,8 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    //check if the zip pack exists
+{	
+	//check if the zip pack exists
     BOOL localZipExists = [[NSFileManager defaultManager] fileExistsAtPath:[self localZipContentFilePath]];
     NSAssert(localZipExists, @"FMAboutPanel couldn't find the applications.zip file");
     
@@ -129,6 +133,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		_trackingPageViews = NO;
 		_newsletterEnabled = NO;
 		_newsletterDoubleOptIn = NO;
+		_supportEnabled = NO;
 		_applicationsUpdatePeriod = kApplicationsUpdatePeriod;
 		_applicationsRemoteBaseURL = kApplicationsRemoteBaseURL;
 		_logoImageName = kLogoImageName;
@@ -137,6 +142,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		_twitterWebURL = kTwitterWebURL;
 		_twitterNativeURL = kTwitterNativeURL;
 		_websiteURL = kWebsiteURL;
+		_supportEmail = kSupportEmail;
 		_newsletterApiKey = nil;
 		_newsletterListID = nil;
 		_newsletterListGroup = nil;
@@ -154,6 +160,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		
 		// text
 		_textPanelFollow = NSLocalizedStringFromTable(@"Follow us", @"FMAboutPanel", @"Flubber Panel: Label for section with social links");
+		_textPanelSupport = NSLocalizedStringFromTable(@"Support", @"FMAboutPanel", @"Flubber Panel: Label for section with support email");
 		_textPanelApps = NSLocalizedStringFromTable(@"Our Apps", @"FMAboutPanel", @"Flubber Panel: Label for section with other apps");
 		_textPanelAppsAlertNoConnection = NSLocalizedStringFromTable(@"You need an Internet connection to download this App", @"FMAboutPanel", @"Flubber Panel: Message when user taps on an App but is not connected to Internet");
 		_textPanelAppsAlertDismiss = NSLocalizedStringFromTable(@"OK", @"FMAboutPanel", @"Flubber Panel: Label on button to dismiss the \"no connection\" alert");
@@ -174,7 +181,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		
 		[self updateApplications];
 		
-	}
+	}	
 	return self;
 }
 
@@ -182,24 +189,30 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 {
 	[super viewDidLoad];
 	
+	UIEdgeInsets bgInset = UIEdgeInsetsMake(310, 0, 20, 0);
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+	{
+		bgInset = UIEdgeInsetsMake(620, 0, 40, 0);
+	}
+	_bgImageView.image = [_bgImageView.image resizableImageWithCapInsets:bgInset];
 	_logoImageView.image = [UIImage imageNamed:_logoImageName];
 	
 	_followUsLabel.text = _textPanelFollow;
+	_supportLabel.text = _textPanelSupport;
 	_ourAppsLabel.text = _textPanelApps;
 	
 	NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
 	NSString *shortVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 	NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
-	NSString *versionLabelText = nil;
 	if (shortVersion)
 	{
-		versionLabelText = [NSString stringWithFormat:@"%@ v%@ (%@)", appName, shortVersion, version];
+		_textAppVersion = [NSString stringWithFormat:@"%@ v%@ (%@)", appName, shortVersion, version];
 	}
 	else
 	{
-		versionLabelText = [NSString stringWithFormat:@"%@ v%@", appName, version];
+		_textAppVersion = [NSString stringWithFormat:@"%@ v%@", appName, version];
 	}
-	_appVersionLabel.text = versionLabelText;
+	_appVersionLabel.text = _textAppVersion;
 	_infoLabel.text = _copyrightString;
 	
 	UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
@@ -216,20 +229,34 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		_facebookButton.transform = buttonTransform;
 		_twitterButton.transform = buttonTransform;
 	}
+	
+	_supportView.hidden = !_supportEnabled;
+	[_supportButton setTitle:_supportEmail forState:UIControlStateNormal];
+	if (_supportEnabled == YES)
+	{
+		_box.frame = CGRectInset(_box.frame, 0.0, -CGRectGetHeight(_supportView.frame) * 0.5);
+	}
+	
 }
 
 - (void)viewDidUnload
 {
 	_box = nil;
 	_darkView = nil;
+	_bgImageView = nil;
+	_logoImageView = nil;
 	_followUsLabel = nil;
+	_supportLabel = nil;
 	_ourAppsLabel = nil;
 	_infoLabel = nil;
 	_facebookButton = nil;
 	_twitterButton = nil;
 	_websiteButton = nil;
 	_newsletterButton = nil;
+	_supportView = nil;
+	_supportButton = nil;
 	_appsScrollView = nil;
+	_pageControl = nil;
 	[super viewDidUnload];
 }
 
@@ -244,7 +271,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 }
 
 - (void)layout
-{
+{	
 	// Clear up appsScrollView
 	[[_appsScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 	
@@ -415,6 +442,9 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 {
 	[self viewWillDisappear:animated];
 	
+	//dismiss the support email panel if showed
+	[self dismissModalViewControllerAnimated:animated];
+	
 	void (^animations) (void) = ^{
 		_darkView.alpha = 0.;
 		_box.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0., self.view.frame.size.height);
@@ -571,6 +601,35 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 	_newsletterSignupTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
 	
 	[_newsletterSignupAlertView show];
+}
+
+- (IBAction)didTapSupport:(id)sender
+{
+	NSString *eventCategory = [_trackingPrefix lowercaseString];
+	NSString *eventAction = @"support";
+	NSString *eventLabel = nil;
+	NSDictionary *eventParameters = nil;
+	_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
+	
+	if ([MFMailComposeViewController canSendMail])
+	{
+		NSArray *toRecipients = [NSArray arrayWithObject:_supportEmail];
+		NSString *subject = NSLocalizedStringFromTable(@"Support", @"FMAboutPanel", @"Flubber Panel: Prefix used for the subject of support emails");
+		subject = [subject stringByAppendingFormat:@": %@", _textAppVersion];
+		MFMailComposeViewController* mailController = [[MFMailComposeViewController alloc] init];
+		[mailController setToRecipients:toRecipients];
+		[mailController setSubject:subject];
+		[mailController setMailComposeDelegate:self];
+		[mailController setMessageBody:_supportMessage isHTML:NO];
+		[self presentViewController:mailController animated:YES completion:nil];
+	}
+	else
+	{
+		NSString *toRecipients = _supportEmail;
+		NSString *email = [NSString stringWithFormat:@"mailto:%@" , toRecipients];
+		email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
+	}
 }
 
 #pragma mark - Applications method
@@ -848,6 +907,13 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 
 - (void)ckRequestFailed:(NSError *)error {
 	[self showSubscribeError];
+}
+
+#pragma mark - Mail Delegate
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+	[controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - ChimpKit

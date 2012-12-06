@@ -89,6 +89,18 @@
 		14FD2A3215BF1D0100FEE5C4 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2A15BF1D0100FEE5C4 /* Icon.png */; };
 		14FD2A3315BF1D0100FEE5C4 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2B15BF1D0100FEE5C4 /* Icon@2x.png */; };
 		653B1EDE15E9AD0A006A091F /* ChimpKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 653B1EDB15E9AD0A006A091F /* ChimpKit.m */; };
+		653BA8F7167024EE006C8083 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 653BA8F6167024EE006C8083 /* Default-568h@2x.png */; };
+		653BA9061670301A006C8083 /* FMAboutPanel.strings in Resources */ = {isa = PBXBuildFile; fileRef = 653BA9011670301A006C8083 /* FMAboutPanel.strings */; };
+		653BA9071670301A006C8083 /* FMAboutPanel.strings in Resources */ = {isa = PBXBuildFile; fileRef = 653BA9041670301A006C8083 /* FMAboutPanel.strings */; };
+		65825844167010C0009476E7 /* bg-apps@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 65825840167010C0009476E7 /* bg-apps@2x~ipad.png */; };
+		65825845167010C0009476E7 /* bg-apps@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 65825841167010C0009476E7 /* bg-apps@2x~iphone.png */; };
+		65825846167010C0009476E7 /* bg-apps~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 65825842167010C0009476E7 /* bg-apps~ipad.png */; };
+		65825847167010C0009476E7 /* bg-apps~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 65825843167010C0009476E7 /* bg-apps~iphone.png */; };
+		6582584D167010E6009476E7 /* divider@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 65825849167010E6009476E7 /* divider@2x~ipad.png */; };
+		6582584E167010E6009476E7 /* divider@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 6582584A167010E6009476E7 /* divider@2x~iphone.png */; };
+		6582584F167010E6009476E7 /* divider~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6582584B167010E6009476E7 /* divider~ipad.png */; };
+		65825850167010E6009476E7 /* divider~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 6582584C167010E6009476E7 /* divider~iphone.png */; };
+		6582585216701147009476E7 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582585116701147009476E7 /* MessageUI.framework */; };
 		65CE89E11617E39A009569A2 /* FMAboutPanel.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65CE89D31617E39A009569A2 /* FMAboutPanel.strings */; };
 		65CE89E21617E39A009569A2 /* FMAboutPanel.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65CE89D61617E39A009569A2 /* FMAboutPanel.strings */; };
 		65CE89E31617E39B009569A2 /* FMAboutPanel.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65CE89D91617E39A009569A2 /* FMAboutPanel.strings */; };
@@ -209,6 +221,18 @@
 		14FD2A2B15BF1D0100FEE5C4 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		653B1EDA15E9AD0A006A091F /* ChimpKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChimpKit.h; sourceTree = "<group>"; };
 		653B1EDB15E9AD0A006A091F /* ChimpKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChimpKit.m; sourceTree = "<group>"; };
+		653BA8F6167024EE006C8083 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		653BA9021670301A006C8083 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = FMAboutPanel.strings; sourceTree = "<group>"; };
+		653BA9051670301A006C8083 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = FMAboutPanel.strings; sourceTree = "<group>"; };
+		65825840167010C0009476E7 /* bg-apps@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-apps@2x~ipad.png"; sourceTree = "<group>"; };
+		65825841167010C0009476E7 /* bg-apps@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-apps@2x~iphone.png"; sourceTree = "<group>"; };
+		65825842167010C0009476E7 /* bg-apps~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-apps~ipad.png"; sourceTree = "<group>"; };
+		65825843167010C0009476E7 /* bg-apps~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-apps~iphone.png"; sourceTree = "<group>"; };
+		65825849167010E6009476E7 /* divider@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "divider@2x~ipad.png"; sourceTree = "<group>"; };
+		6582584A167010E6009476E7 /* divider@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "divider@2x~iphone.png"; sourceTree = "<group>"; };
+		6582584B167010E6009476E7 /* divider~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "divider~ipad.png"; sourceTree = "<group>"; };
+		6582584C167010E6009476E7 /* divider~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "divider~iphone.png"; sourceTree = "<group>"; };
+		6582585116701147009476E7 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		65CE89D41617E39A009569A2 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = FMAboutPanel.strings; sourceTree = "<group>"; };
 		65CE89D71617E39A009569A2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = FMAboutPanel.strings; sourceTree = "<group>"; };
 		65CE89DA1617E39A009569A2 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = FMAboutPanel.strings; sourceTree = "<group>"; };
@@ -221,6 +245,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6582585216701147009476E7 /* MessageUI.framework in Frameworks */,
 				14B281BC15BEF1040030CAC5 /* UIKit.framework in Frameworks */,
 				14B281BE15BEF1040030CAC5 /* Foundation.framework in Frameworks */,
 				14B281C015BEF1040030CAC5 /* CoreGraphics.framework in Frameworks */,
@@ -251,6 +276,7 @@
 		14B281BA15BEF1040030CAC5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6582585116701147009476E7 /* MessageUI.framework */,
 				14B281BB15BEF1040030CAC5 /* UIKit.framework */,
 				14B281BD15BEF1040030CAC5 /* Foundation.framework */,
 				14B281BF15BEF1040030CAC5 /* CoreGraphics.framework */,
@@ -305,6 +331,12 @@
 				65CE89D81617E39A009569A2 /* es.lproj */,
 				65CE89DB1617E39A009569A2 /* fr.lproj */,
 				65CE89DE1617E39A009569A2 /* it.lproj */,
+				653BA9001670301A006C8083 /* ja.lproj */,
+				653BA9031670301A006C8083 /* zh-Hans.lproj */,
+				65825840167010C0009476E7 /* bg-apps@2x~ipad.png */,
+				65825841167010C0009476E7 /* bg-apps@2x~iphone.png */,
+				65825842167010C0009476E7 /* bg-apps~ipad.png */,
+				65825843167010C0009476E7 /* bg-apps~iphone.png */,
 				14B281E015BEF11D0030CAC5 /* bg-flubber-panel@2x~ipad.png */,
 				14B281E115BEF11D0030CAC5 /* bg-flubber-panel@2x~iphone.png */,
 				14B281E215BEF11D0030CAC5 /* bg-flubber-panel~ipad.png */,
@@ -337,6 +369,10 @@
 				14B281FD15BEF11D0030CAC5 /* cover-launch@2x~iphone.png */,
 				14B281FE15BEF11D0030CAC5 /* cover-launch~ipad.png */,
 				14B281FF15BEF11D0030CAC5 /* cover-launch~iphone.png */,
+				65825849167010E6009476E7 /* divider@2x~ipad.png */,
+				6582584A167010E6009476E7 /* divider@2x~iphone.png */,
+				6582584B167010E6009476E7 /* divider~ipad.png */,
+				6582584C167010E6009476E7 /* divider~iphone.png */,
 				14B2820015BEF11D0030CAC5 /* flubber-panel-logo@2x~ipad.png */,
 				14B2820115BEF11D0030CAC5 /* flubber-panel-logo@2x~iphone.png */,
 				14B2820215BEF11D0030CAC5 /* flubber-panel-logo~ipad.png */,
@@ -433,6 +469,7 @@
 				14FD2A2515BF1D0100FEE5C4 /* Default-Portrait.png */,
 				14FD2A2615BF1D0100FEE5C4 /* Default.png */,
 				14FD2A2715BF1D0100FEE5C4 /* Default@2x.png */,
+				653BA8F6167024EE006C8083 /* Default-568h@2x.png */,
 				14FD2A2815BF1D0100FEE5C4 /* Icon-72.png */,
 				14FD2A2915BF1D0100FEE5C4 /* Icon-72@2x.png */,
 				14FD2A2A15BF1D0100FEE5C4 /* Icon.png */,
@@ -448,6 +485,22 @@
 				653B1EDB15E9AD0A006A091F /* ChimpKit.m */,
 			);
 			path = ChimpKit;
+			sourceTree = "<group>";
+		};
+		653BA9001670301A006C8083 /* ja.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				653BA9011670301A006C8083 /* FMAboutPanel.strings */,
+			);
+			path = ja.lproj;
+			sourceTree = "<group>";
+		};
+		653BA9031670301A006C8083 /* zh-Hans.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				653BA9041670301A006C8083 /* FMAboutPanel.strings */,
+			);
+			path = "zh-Hans.lproj";
 			sourceTree = "<group>";
 		};
 		65CE89D21617E39A009569A2 /* de.lproj */ = {
@@ -529,6 +582,8 @@
 				es,
 				fr,
 				it,
+				ja,
+				"zh-Hans",
 			);
 			mainGroup = 14B281AC15BEF1040030CAC5;
 			productRefGroup = 14B281B815BEF1040030CAC5 /* Products */;
@@ -600,6 +655,17 @@
 				65CE89E41617E39B009569A2 /* FMAboutPanel.strings in Resources */,
 				65CE89E51617E39B009569A2 /* FMAboutPanel.strings in Resources */,
 				141454C716627071003B21E0 /* applications.zip in Resources */,
+				65825844167010C0009476E7 /* bg-apps@2x~ipad.png in Resources */,
+				65825845167010C0009476E7 /* bg-apps@2x~iphone.png in Resources */,
+				65825846167010C0009476E7 /* bg-apps~ipad.png in Resources */,
+				65825847167010C0009476E7 /* bg-apps~iphone.png in Resources */,
+				6582584D167010E6009476E7 /* divider@2x~ipad.png in Resources */,
+				6582584E167010E6009476E7 /* divider@2x~iphone.png in Resources */,
+				6582584F167010E6009476E7 /* divider~ipad.png in Resources */,
+				65825850167010E6009476E7 /* divider~iphone.png in Resources */,
+				653BA8F7167024EE006C8083 /* Default-568h@2x.png in Resources */,
+				653BA9061670301A006C8083 /* FMAboutPanel.strings in Resources */,
+				653BA9071670301A006C8083 /* FMAboutPanel.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -667,6 +733,22 @@
 				14B281D115BEF1040030CAC5 /* en */,
 			);
 			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		653BA9011670301A006C8083 /* FMAboutPanel.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				653BA9021670301A006C8083 /* ja */,
+			);
+			name = FMAboutPanel.strings;
+			sourceTree = "<group>";
+		};
+		653BA9041670301A006C8083 /* FMAboutPanel.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				653BA9051670301A006C8083 /* zh-Hans */,
+			);
+			name = FMAboutPanel.strings;
 			sourceTree = "<group>";
 		};
 		65CE89D31617E39A009569A2 /* FMAboutPanel.strings */ = {

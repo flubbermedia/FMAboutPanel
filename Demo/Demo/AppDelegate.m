@@ -20,8 +20,9 @@
 	[FMAboutPanel sharedInstance].newsletterEnabled = YES;
 	[FMAboutPanel sharedInstance].newsletterApiKey = @"example";
 	[FMAboutPanel sharedInstance].newsletterListID = @"example";
+	[FMAboutPanel sharedInstance].supportEnabled = NO;
     
-    return YES;
+	return YES;
 }
 
 @end

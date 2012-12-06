@@ -27,12 +27,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 #import "ChimpKit.h"
 
 typedef void (^EventTracking)(NSString *category, NSString *action, NSString *label, NSDictionary *parameters);
 typedef void (^PageTracking)(NSString *page, NSDictionary *parameters);
 
-@interface FMAboutPanel : UIViewController <NSURLConnectionDelegate, UIScrollViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, ChimpKitDelegate>
+@interface FMAboutPanel : UIViewController <NSURLConnectionDelegate, UIScrollViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, MFMailComposeViewControllerDelegate, ChimpKitDelegate>
 
 // Tracking Block
 
@@ -43,8 +45,10 @@ typedef void (^PageTracking)(NSString *page, NSDictionary *parameters);
 
 @property (strong, nonatomic) IBOutlet UIView *box;
 @property (strong, nonatomic) IBOutlet UIView *darkView;
+@property (strong, nonatomic) IBOutlet UIImageView *bgImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *logoImageView;
 @property (strong, nonatomic) IBOutlet UILabel *followUsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *supportLabel;
 @property (strong, nonatomic) IBOutlet UILabel *ourAppsLabel;
 @property (strong, nonatomic) IBOutlet UILabel *appVersionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *infoLabel;
@@ -52,6 +56,8 @@ typedef void (^PageTracking)(NSString *page, NSDictionary *parameters);
 @property (strong, nonatomic) IBOutlet UIButton *twitterButton;
 @property (strong, nonatomic) IBOutlet UIButton *websiteButton;
 @property (strong, nonatomic) IBOutlet UIButton *newsletterButton;
+@property (strong, nonatomic) IBOutlet UIView *supportView;
+@property (strong, nonatomic) IBOutlet UIButton *supportButton;
 @property (strong, nonatomic) IBOutlet UIScrollView *appsScrollView;
 @property (strong, nonatomic) IBOutlet UIPageControl *pageControl;
 
@@ -61,6 +67,7 @@ typedef void (^PageTracking)(NSString *page, NSDictionary *parameters);
 @property (assign, nonatomic) BOOL trackingPageViews;
 @property (assign, nonatomic) BOOL newsletterEnabled;
 @property (assign, nonatomic) BOOL newsletterDoubleOptIn;
+@property (assign, nonatomic) BOOL supportEnabled;
 @property (assign, nonatomic) double applicationsUpdatePeriod;
 @property (strong, nonatomic) NSString *applicationsRemoteBaseURL;
 @property (strong, nonatomic) NSString *logoImageName;
@@ -73,6 +80,8 @@ typedef void (^PageTracking)(NSString *page, NSDictionary *parameters);
 @property (strong, nonatomic) NSString *newsletterListID;
 @property (strong, nonatomic) NSString *newsletterListGroup;
 @property (strong, nonatomic) NSString *newsletterListGroupOption;
+@property (strong, nonatomic) NSString *supportEmail;
+@property (strong, nonatomic) NSString *supportMessage;
 @property (strong, nonatomic) NSString *copyrightString;
 @property (strong, nonatomic) NSString *trackingPrefix;
 
@@ -82,7 +91,6 @@ typedef void (^PageTracking)(NSString *page, NSDictionary *parameters);
 - (void)presentAnimated:(BOOL)animated;
 - (void)dismiss;
 - (void)dismissAnimated:(BOOL)animated;
-- (IBAction)didTapClose:(id)sender;
 
 - (void)forceRemoteUpdate;
 
