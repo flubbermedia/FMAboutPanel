@@ -59,6 +59,22 @@ static NSString * const kWebsiteURL = @"http://flubbermedia.com";
 static NSString * const kSupportEmail = @"support@flubbermedia.com";
 static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll rights reserved";
 
+//localization
+
+static NSString * const kLocalizeCancel = @"Cancel";
+static NSString * const kLocalizeEmailAddress = @"Email Address";
+static NSString * const kLocalizesEnterEmail = @"Enter your email address to subscribe to our mailing list.";
+static NSString * const kLocalizeFollowUs = @"Follow us";
+static NSString * const kLocalizeOk = @"OK";
+static NSString * const kLocalizeOurApps = @"Our Apps";
+static NSString * const kLocalizeSubscribe = @"Subscribe";
+static NSString * const kLocalizeSubscriptionFailed = @"Subscription Failed";
+static NSString * const kLocalizeSupport = @"Support";
+static NSString * const kLocalizeNotSubscribed = @"We couldn't subscribe you to the list. Please check your email address and try again.";
+static NSString * const kLocalizeConnectionNeeded = @"You need an Internet connection to download this App";
+
+
+
 
 @interface FMAboutPanel ()
 
@@ -159,19 +175,19 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		};
 		
 		// text
-		_textPanelFollow = NSLocalizedStringFromTable(@"Follow us", @"FMAboutPanel", @"Flubber Panel: Label for section with social links");
-		_textPanelSupport = NSLocalizedStringFromTable(@"Support", @"FMAboutPanel", @"Flubber Panel: Label for section with support email");
-		_textPanelApps = NSLocalizedStringFromTable(@"Our Apps", @"FMAboutPanel", @"Flubber Panel: Label for section with other apps");
-		_textPanelAppsAlertNoConnection = NSLocalizedStringFromTable(@"You need an Internet connection to download this App", @"FMAboutPanel", @"Flubber Panel: Message when user taps on an App but is not connected to Internet");
-		_textPanelAppsAlertDismiss = NSLocalizedStringFromTable(@"OK", @"FMAboutPanel", @"Flubber Panel: Label on button to dismiss the \"no connection\" alert");
-		_textNewsletterSubscribeAlertTitle = NSLocalizedStringFromTable(@"Subscribe", @"FMAboutPanel", @"Flubber Panel: Title for the alert to subscribe to the newsletter");
-		_textNewsletterSubscribeAlertMessage = NSLocalizedStringFromTable(@"Enter your email address to subscribe to our mailing list.", @"FMAboutPanel", @"Flubber Panel: Message for the alert to subscribe to the newsletter");
-		_textNewsletterSubscribeAlertButtonSubscribe = NSLocalizedStringFromTable(@"Subscribe", @"FMAboutPanel", @"Flubber Panel: Label on the button to subscribe to the newsletter");
-		_textNewsletterSubscribeAlertButtonDismiss = NSLocalizedStringFromTable(@"Cancel", @"FMAboutPanel", @"Flubber Panel: Label on the button to cancel the subscription to the newsletter");
-		_textNewsletterSubscribeAlertFieldPlaceholder = NSLocalizedStringFromTable(@"Email Address", @"FMAboutPanel", @"Flubber Panel: Placeholder text for the email field");
-		_textNewsletterFailAlertTitle = NSLocalizedStringFromTable(@"Subscription Failed", @"FMAboutPanel", @"Flubber Panel: Title for the alert displayed when the signup fails");
-		_textNewsletterFailAlertMessage = NSLocalizedStringFromTable(@"We couldn't subscribe you to the list. Please check your email address and try again.", @"FMAboutPanel", @"Flubber Panel: Message for the alert displayed when the signup fails");
-		_textNewsletterFailAlertDismiss = NSLocalizedStringFromTable(@"OK", @"FMAboutPanel", @"Flubber Panel: Label on the button to dismiss the alert displayed when the signup fails");
+		_textPanelFollow = [self localizedStringForKey:kLocalizeFollowUs];
+		_textPanelSupport = [self localizedStringForKey:kLocalizeSupport];
+		_textPanelApps = [self localizedStringForKey:kLocalizeOurApps];
+		_textPanelAppsAlertNoConnection = [self localizedStringForKey:kLocalizeConnectionNeeded];
+		_textPanelAppsAlertDismiss = [self localizedStringForKey:kLocalizeOk];
+		_textNewsletterSubscribeAlertTitle = [self localizedStringForKey:kLocalizeSubscribe];
+		_textNewsletterSubscribeAlertMessage = [self localizedStringForKey:kLocalizesEnterEmail];
+		_textNewsletterSubscribeAlertButtonSubscribe = [self localizedStringForKey:kLocalizeSubscribe];
+		_textNewsletterSubscribeAlertButtonDismiss = [self localizedStringForKey:kLocalizeCancel];
+		_textNewsletterSubscribeAlertFieldPlaceholder = [self localizedStringForKey:kLocalizeEmailAddress];
+		_textNewsletterFailAlertTitle = [self localizedStringForKey:kLocalizeSubscriptionFailed];
+		_textNewsletterFailAlertMessage = [self localizedStringForKey:kLocalizeNotSubscribed];
+		_textNewsletterFailAlertDismiss = [self localizedStringForKey:kLocalizeOk];
 		
 		// initialize local data
 		if ([self shouldLoadApplicationsLocalData])
@@ -614,7 +630,7 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 	if ([MFMailComposeViewController canSendMail])
 	{
 		NSArray *toRecipients = [NSArray arrayWithObject:_supportEmail];
-		NSString *subject = NSLocalizedStringFromTable(@"Support", @"FMAboutPanel", @"Flubber Panel: Prefix used for the subject of support emails");
+		NSString *subject = [self localizedStringForKey:kLocalizeSupport];
 		subject = [subject stringByAppendingFormat:@": %@", _textAppVersion];
 		MFMailComposeViewController* mailController = [[MFMailComposeViewController alloc] init];
 		[mailController setToRecipients:toRecipients];
@@ -959,6 +975,38 @@ static NSString * const kCopyrightText = @"Copyright © Flubber Media Ltd\nAll r
 		return NO;
 	}
 	return YES;
+}
+
+#pragma mark - Localization
+
+- (NSString *)localizedStringForKey:(NSString *)key
+{
+    return [self localizedStringForKey:key withDefault:key];
+}
+
+- (NSString *)localizedStringForKey:(NSString *)key withDefault:(NSString *)defaultString
+{
+    static NSBundle *bundle = nil;
+    if (bundle == nil)
+    {
+        NSString *bundlePath = [[NSBundle mainBundle] pathForResource:NSStringFromClass([self class]) ofType:@"bundle"];
+        bundle = [NSBundle bundleWithPath:bundlePath] ?: [NSBundle mainBundle];
+//        if (self.useAllAvailableLanguages)
+//        {
+//            //manually select the desired lproj folder
+//            for (NSString *language in [NSLocale preferredLanguages])
+//            {
+//                if ([[bundle localizations] containsObject:language])
+//                {
+//                    bundlePath = [bundle pathForResource:language ofType:@"lproj"];
+//                    bundle = [NSBundle bundleWithPath:bundlePath];
+//                    break;
+//                }
+//            }
+//        }
+    }
+    defaultString = [bundle localizedStringForKey:key value:defaultString table:nil];
+    return [[NSBundle mainBundle] localizedStringForKey:key value:defaultString table:nil];
 }
 
 @end
