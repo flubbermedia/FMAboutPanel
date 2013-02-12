@@ -50,7 +50,7 @@ static NSString * const kApplicationsLocalPlistFilename = @"applications.plist";
 static NSString * const kAppStoreFormat = @"itms-apps://itunes.apple.com/app/id%@";
 static NSString * const kTrackingPrefix = @"page.flubberpanel";
 
-static NSString * const kLogoImageName = @"flubber-panel-logo.png";
+static NSString * const kLogoImageName = @"FMAboutPanel.bundle/flubber-panel-logo.png";
 static NSString * const kFacebookWebURL = @"https://www.facebook.com/flubbermedia";
 static NSString * const kFacebookNativeURL = @"fb://profile/327002840656323";
 static NSString * const kTwitterWebURL = @"https://twitter.com/#!/flubbermedia";
@@ -109,7 +109,18 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	static FMAboutPanel *sharedInstance = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		sharedInstance = [FMAboutPanel new];
+        
+        //nib name
+        NSString *nibName = @"FMAboutPanel~iphone";
+        if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+            nibName = @"FMAboutPanel~ipad";
+        
+        //bundle
+        NSString *bundlePath = [[NSBundle mainBundle] pathForResource:NSStringFromClass([self class]) ofType:@"bundle"];
+        NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+        
+		sharedInstance = [[FMAboutPanel alloc] initWithNibName:nibName bundle:bundle];
+        
 	});
 	return sharedInstance;
 }
@@ -119,13 +130,6 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	//check if the zip pack exists
     BOOL localZipExists = [[NSFileManager defaultManager] fileExistsAtPath:[self localZipContentFilePath]];
     NSAssert(localZipExists, @"FMAboutPanel couldn't find the applications.zip file");
-    
-	//force the nib name
-	nibNameOrNil = @"FMAboutPanel~iphone";
-	if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
-	{
-		nibNameOrNil = @"FMAboutPanel~ipad";
-	}
 	
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (self)
@@ -373,13 +377,13 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 				NSURL *url = [NSURL URLWithString:URLScheme];
 				if ([[UIApplication sharedApplication] canOpenURL:url])
 				{
-					appCover.image = [UIImage imageNamed:@"cover-launch.png"];
+					appCover.image = [UIImage imageNamed:@"FMAboutPanel.bundle/cover-launch.png"];
 					break;
 				}
 			}
 			if (appCover.image == nil)
 			{
-				appCover.image = [UIImage imageNamed:@"cover-download.png"];
+				appCover.image = [UIImage imageNamed:@"FMAboutPanel.bundle/cover-download.png"];
 			}
 			[appBoxView addSubview:appCover];
 		}
