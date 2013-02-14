@@ -224,13 +224,18 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
 	NSString *shortVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 	NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString *debug = @"";
+#if DEBUG
+    debug = @" #DEBUG";
+#endif
+    
 	if (shortVersion)
 	{
-		_textAppVersion = [NSString stringWithFormat:@"%@ v%@ (%@)", appName, shortVersion, version];
+		_textAppVersion = [NSString stringWithFormat:@"%@ v%@ (%@)%@", appName, shortVersion, version, debug];
 	}
 	else
 	{
-		_textAppVersion = [NSString stringWithFormat:@"%@ v%@", appName, version];
+		_textAppVersion = [NSString stringWithFormat:@"%@ v%@%@", appName, version, debug];
 	}
 	_appVersionLabel.text = _textAppVersion;
 	_infoLabel.text = _copyrightString;
