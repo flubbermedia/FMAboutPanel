@@ -23,5 +23,4 @@ FMAboutPanel uses an external library to handle the unzipping of the remote file
 https://github.com/flyingdolphinstudio/Objective-Zip
 
 and Chimpkit to handle the MailChimp newsletter signup functionality:
-https://github.com/mailchimp/ChimpKit2
-
+https://github.com/flubbermedia/Objective-Zip
