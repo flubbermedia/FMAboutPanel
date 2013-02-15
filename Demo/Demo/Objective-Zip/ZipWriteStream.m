@@ -1,8 +1,8 @@
 //
-//  ZipReadStream.m
+//  ZipWriteStream.m
 //  Objective-Zip v. 0.8
 //
-//  Created by Gianluca Bertani on 28/12/09.
+//  Created by Gianluca Bertani on 25/12/09.
 //  Copyright 2009-10 Flying Dolphin Studio. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without 
@@ -31,39 +31,37 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ZipReadStream.h"
+#import "ZipWriteStream.h"
 #import "ZipException.h"
 
-#include "unzip.h"
+#include "zip.h"
 
 
-@implementation ZipReadStream
+@implementation ZipWriteStream
 
 
-- (id) initWithUnzFileStruct:(unzFile)unzFile fileNameInZip:(NSString *)fileNameInZip {
+- (id) initWithZipFileStruct:(zipFile)zipFile fileNameInZip:(NSString *)fileNameInZip {
 	if (self= [super init]) {
-		_unzFile= unzFile;
+		_zipFile= zipFile;
 		_fileNameInZip= fileNameInZip;
 	}
 	
 	return self;
 }
 
-- (NSUInteger) readDataWithBuffer:(NSMutableData *)buffer {
-	int err= unzReadCurrentFile(_unzFile, [buffer mutableBytes], [buffer length]);
+- (void) writeData:(NSData *)data {
+	int err= zipWriteInFileInZip(_zipFile, [data bytes], [data length]);
 	if (err < 0) {
-		NSString *reason= [NSString stringWithFormat:@"Error in reading '%@' in the zipfile", _fileNameInZip];
-		@throw [[[ZipException alloc] initWithError:err reason:reason] autorelease];
+		NSString *reason= [NSString stringWithFormat:@"Error in writing '%@' in the zipfile", _fileNameInZip];
+		@throw [[ZipException alloc] initWithError:err reason:reason];
 	}
-	
-	return err;
 }
 
-- (void) finishedReading {
-	int err= unzCloseCurrentFile(_unzFile);
-	if (err != UNZ_OK) {
+- (void) finishedWriting {
+	int err= zipCloseFileInZip(_zipFile);
+	if (err != ZIP_OK) {
 		NSString *reason= [NSString stringWithFormat:@"Error in closing '%@' in the zipfile", _fileNameInZip];
-		@throw [[[ZipException alloc] initWithError:err reason:reason] autorelease];
+		@throw [[ZipException alloc] initWithError:err reason:reason];
 	}
 }
 

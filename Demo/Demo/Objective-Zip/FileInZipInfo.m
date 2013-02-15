@@ -1,8 +1,8 @@
 //
-//  ZipReadStream.h
+//  FileInZipInfo.m
 //  Objective-Zip v. 0.8
 //
-//  Created by Gianluca Bertani on 28/12/09.
+//  Created by Gianluca Bertani on 27/12/09.
 //  Copyright 2009-10 Flying Dolphin Studio. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without 
@@ -31,22 +31,32 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Foundation/Foundation.h>
-#import "ARCHelper.h"
-
-#include "unzip.h"
+#import "FileInZipInfo.h"
 
 
-@interface ZipReadStream : NSObject {
-	NSString *_fileNameInZip;
+@implementation FileInZipInfo
+
+- (id) initWithName:(NSString *)name length:(NSUInteger)length level:(ZipCompressionLevel)level crypted:(BOOL)crypted size:(NSUInteger)size date:(NSDate *)date crc32:(NSUInteger)crc32 {
+	if (self= [super init]) {
+		_name= name;
+		_length= length;
+		_level= level;
+		_crypted= crypted;
+		_size= size;
+		_date= date;
+		_crc32= crc32;
+	}
 	
-@private
-	unzFile _unzFile;
+	return self;
 }
 
-- (id) initWithUnzFileStruct:(unzFile)unzFile fileNameInZip:(NSString *)fileNameInZip;
 
-- (NSUInteger) readDataWithBuffer:(NSMutableData *)buffer;
-- (void) finishedReading;
+@synthesize name= _name;
+@synthesize length= _length;
+@synthesize level= _level;
+@synthesize crypted= _crypted;
+@synthesize size= _size;
+@synthesize date= _date;
+@synthesize crc32= _crc32;
 
 @end

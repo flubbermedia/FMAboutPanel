@@ -10,7 +10,6 @@
 #include <string.h>
 #include "zlib.h"
 #include "unzip.h"
-#include "mztools.h"
 
 #define READ_8(adr)  ((unsigned char)*(adr))
 #define READ_16(adr) ( READ_8(adr) | (READ_8(adr+1) << 8) )

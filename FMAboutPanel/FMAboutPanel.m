@@ -27,7 +27,9 @@
 //
 
 #import "FMAboutPanel.h"
-#import "ObjectiveZip.h"
+#import "ZipFile.h"
+#import "ZipReadStream.h"
+#import "FileInZipInfo.h"
 #import <QuartzCore/QuartzCore.h>
 
 static NSInteger const kBoxTag = 1001;

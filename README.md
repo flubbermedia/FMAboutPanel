@@ -15,3 +15,13 @@ ARC Compatibility
 ------------------
 
 FMAboutPanel works only with ARC enabled.
+
+Third party dependencies
+------------------------
+
+FMAboutPanel uses an external library to handle the unzipping of the remote file:
+https://github.com/flyingdolphinstudio/Objective-Zip
+
+and Chimpkit to handle the MailChimp newsletter signup functionality:
+https://github.com/mailchimp/ChimpKit2
+
