@@ -27,10 +27,10 @@
 		14FD2A3115BF1D0100FEE5C4 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2915BF1D0100FEE5C4 /* Icon-72@2x.png */; };
 		14FD2A3215BF1D0100FEE5C4 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2A15BF1D0100FEE5C4 /* Icon.png */; };
 		14FD2A3315BF1D0100FEE5C4 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14FD2A2B15BF1D0100FEE5C4 /* Icon@2x.png */; };
-		65250E4216DED3AE0016BC13 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65250E4116DED3AE0016BC13 /* libzipzap.a */; };
 		65250E4816DED3F50016BC13 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65250E4716DED3F50016BC13 /* ImageIO.framework */; };
 		65250E4A16DED4090016BC13 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65250E4916DED4090016BC13 /* libc++.dylib */; };
 		65250E4C16DED4120016BC13 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65250E4B16DED4120016BC13 /* libz.dylib */; };
+		65250E5216DEE36D0016BC13 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65250E4E16DEE36D0016BC13 /* libzipzap.a */; };
 		653BA8F7167024EE006C8083 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 653BA8F6167024EE006C8083 /* Default-568h@2x.png */; };
 		6582585216701147009476E7 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582585116701147009476E7 /* MessageUI.framework */; };
 		65F2D3D016CEAB5300BEE16C /* ChimpKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2D3CF16CEAB5300BEE16C /* ChimpKit.m */; };
@@ -63,13 +63,13 @@
 		14FD2A2915BF1D0100FEE5C4 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		14FD2A2A15BF1D0100FEE5C4 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		14FD2A2B15BF1D0100FEE5C4 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		65250E4116DED3AE0016BC13 /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libzipzap.a; sourceTree = "<group>"; };
-		65250E4416DED3BA0016BC13 /* ZZArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZArchive.h; sourceTree = "<group>"; };
-		65250E4516DED3BA0016BC13 /* ZZArchiveEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZArchiveEntry.h; sourceTree = "<group>"; };
-		65250E4616DED3BA0016BC13 /* ZZError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZError.h; sourceTree = "<group>"; };
 		65250E4716DED3F50016BC13 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		65250E4916DED4090016BC13 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		65250E4B16DED4120016BC13 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		65250E4E16DEE36D0016BC13 /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libzipzap.a; sourceTree = "<group>"; };
+		65250E4F16DEE36D0016BC13 /* ZZArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZArchive.h; sourceTree = "<group>"; };
+		65250E5016DEE36D0016BC13 /* ZZArchiveEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZArchiveEntry.h; sourceTree = "<group>"; };
+		65250E5116DEE36D0016BC13 /* ZZError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZError.h; sourceTree = "<group>"; };
 		653BA8F6167024EE006C8083 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		6582585116701147009476E7 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		65F2D3CE16CEAB5300BEE16C /* ChimpKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChimpKit.h; sourceTree = "<group>"; };
@@ -88,7 +88,7 @@
 				14B281BC15BEF1040030CAC5 /* UIKit.framework in Frameworks */,
 				14B281BE15BEF1040030CAC5 /* Foundation.framework in Frameworks */,
 				14B281C015BEF1040030CAC5 /* CoreGraphics.framework in Frameworks */,
-				65250E4216DED3AE0016BC13 /* libzipzap.a in Frameworks */,
+				65250E5216DEE36D0016BC13 /* libzipzap.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,22 +182,22 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		65250E4016DED39A0016BC13 /* ZipZap */ = {
+		65250E4D16DEE36D0016BC13 /* ZipZap */ = {
 			isa = PBXGroup;
 			children = (
-				65250E4416DED3BA0016BC13 /* ZZArchive.h */,
-				65250E4516DED3BA0016BC13 /* ZZArchiveEntry.h */,
-				65250E4616DED3BA0016BC13 /* ZZError.h */,
-				65250E4116DED3AE0016BC13 /* libzipzap.a */,
+				65250E4E16DEE36D0016BC13 /* libzipzap.a */,
+				65250E4F16DEE36D0016BC13 /* ZZArchive.h */,
+				65250E5016DEE36D0016BC13 /* ZZArchiveEntry.h */,
+				65250E5116DEE36D0016BC13 /* ZZError.h */,
 			);
-			name = ZipZap;
+			path = ZipZap;
 			sourceTree = "<group>";
 		};
 		65F2D38416CEAAD900BEE16C /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				65250E4016DED39A0016BC13 /* ZipZap */,
 				65F2D3CD16CEAB5300BEE16C /* ChimpKit */,
+				65250E4D16DEE36D0016BC13 /* ZipZap */,
 			);
 			name = ThirdParty;
 			sourceTree = "<group>";
@@ -394,6 +394,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Demo\"",
+					"\"$(SRCROOT)/Demo/ZipZap\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -409,6 +410,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Demo\"",
+					"\"$(SRCROOT)/Demo/ZipZap\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

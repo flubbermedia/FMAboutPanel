@@ -779,29 +779,6 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 		}
 	}
 	
-//	//list the files in the zip file
-//	NSArray *infos = [unzipFile listFileInZipInfos];
-//	for (FileInZipInfo *info in infos) {
-//		if (![info.name hasPrefix:@"_"])
-//		{
-//			// Locate the file in the zip
-//			[unzipFile locateFileInZip:info.name];
-//			
-//			// Expand the file in memory
-//			ZipReadStream *read = [unzipFile readCurrentFileInZip];
-//			NSMutableData *data = [[NSMutableData alloc] initWithLength:info.length];
-//			[read readDataWithBuffer:data];
-//			[read finishedReading];
-//			
-//			// Write the file to disk
-//			NSString *filePath = [[self privateDataPath] stringByAppendingPathComponent:info.name];
-//			[data writeToFile:filePath atomically:YES];
-//		}
-//	}
-//	
-//	//close the zip file
-//	[unzipFile close];
-	
 	//delete the temporary data on disk
 	[[NSFileManager defaultManager] removeItemAtPath:tempZipDataPath error:nil];
 }
