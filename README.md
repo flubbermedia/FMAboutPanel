@@ -20,7 +20,7 @@ Third party dependencies
 ------------------------
 
 FMAboutPanel uses an external library to handle the unzipping of the remote file:
-https://github.com/flyingdolphinstudio/Objective-Zip
+https://github.com/pixelglow/zipzap
 
 and Chimpkit to handle the MailChimp newsletter signup functionality:
-https://github.com/flubbermedia/Objective-Zip
+https://github.com/mailchimp/ChimpKit2
