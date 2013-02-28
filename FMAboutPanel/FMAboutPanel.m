@@ -27,9 +27,9 @@
 //
 
 #import "FMAboutPanel.h"
-#import "ZipFile.h"
-#import "ZipReadStream.h"
-#import "FileInZipInfo.h"
+#import "ZZArchive.h"
+#import "ZZArchiveEntry.h"
+#import "ZZError.h"
 #import <QuartzCore/QuartzCore.h>
 
 static NSInteger const kBoxTag = 1001;
@@ -756,11 +756,11 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	NSString *tempZipDataPath = [[self privateDataPath] stringByAppendingPathComponent:kApplicationsTempZipFilename];
 	[zipData writeToFile:tempZipDataPath atomically:YES];
 	
-	ZipFile *unzipFile = nil;
+	ZZArchive *unzipFile = nil;
 	@try
 	{
 		//open the zip file
-		unzipFile = [[ZipFile alloc] initWithFileName:tempZipDataPath mode:ZipFileModeUnzip];
+		unzipFile = [ZZArchive archiveWithContentsOfURL:[NSURL fileURLWithPath:tempZipDataPath]];
 	}
 	@catch (NSException *exception)
 	{
@@ -768,28 +768,39 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 		return;
 	}
 	
-	//list the files in the zip file
-	NSArray *infos = [unzipFile listFileInZipInfos];
-	for (FileInZipInfo *info in infos) {
-		if (![info.name hasPrefix:@"_"])
+	NSArray *files = unzipFile.entries;
+	for (ZZArchiveEntry *file in files)
+	{
+		if (![file.fileName hasPrefix:@"_"])
 		{
-			// Locate the file in the zip
-			[unzipFile locateFileInZip:info.name];
-			
-			// Expand the file in memory
-			ZipReadStream *read = [unzipFile readCurrentFileInZip];
-			NSMutableData *data = [[NSMutableData alloc] initWithLength:info.length];
-			[read readDataWithBuffer:data];
-			[read finishedReading];
-			
-			// Write the file to disk
-			NSString *filePath = [[self privateDataPath] stringByAppendingPathComponent:info.name];
-			[data writeToFile:filePath atomically:YES];
+			NSLog(@"%@", file.fileName);
+			NSString *filePath = [[self privateDataPath] stringByAppendingPathComponent:file.fileName];
+			[file.data writeToFile:filePath atomically:YES];
 		}
 	}
 	
-	//close the zip file
-	[unzipFile close];
+//	//list the files in the zip file
+//	NSArray *infos = [unzipFile listFileInZipInfos];
+//	for (FileInZipInfo *info in infos) {
+//		if (![info.name hasPrefix:@"_"])
+//		{
+//			// Locate the file in the zip
+//			[unzipFile locateFileInZip:info.name];
+//			
+//			// Expand the file in memory
+//			ZipReadStream *read = [unzipFile readCurrentFileInZip];
+//			NSMutableData *data = [[NSMutableData alloc] initWithLength:info.length];
+//			[read readDataWithBuffer:data];
+//			[read finishedReading];
+//			
+//			// Write the file to disk
+//			NSString *filePath = [[self privateDataPath] stringByAppendingPathComponent:info.name];
+//			[data writeToFile:filePath atomically:YES];
+//		}
+//	}
+//	
+//	//close the zip file
+//	[unzipFile close];
 	
 	//delete the temporary data on disk
 	[[NSFileManager defaultManager] removeItemAtPath:tempZipDataPath error:nil];
