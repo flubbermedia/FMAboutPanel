@@ -890,7 +890,7 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 
 - (IBAction)didTapPageControl:(id)sender
 {
-	int currentPage = _pageControl.currentPage;
+	NSInteger currentPage = _pageControl.currentPage;
 	CGRect rect = _appsScrollView.bounds;
 	rect.origin.x = _appsScrollView.bounds.size.width * currentPage;
 	[_appsScrollView scrollRectToVisible:rect animated:YES];
