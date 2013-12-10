@@ -130,7 +130,8 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {	
 	//check if the zip pack exists
-    BOOL localZipExists = [[NSFileManager defaultManager] fileExistsAtPath:[self localZipContentFilePath]];
+    BOOL localZipExists = NO;
+    localZipExists = [[NSFileManager defaultManager] fileExistsAtPath:[self localZipContentFilePath]];
     NSAssert(localZipExists, @"FMAboutPanel couldn't find the applications.zip file");
 	
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
