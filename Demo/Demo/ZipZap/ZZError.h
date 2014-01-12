@@ -36,18 +36,71 @@ extern NSString* const ZZErrorDomain;
 
 extern NSString* const ZZEntryIndexKey;
 
-typedef enum
+/**
+ * Error codes for NSError.
+ */
+typedef NS_ENUM(NSInteger, ZZErrorCode)
 {
+	/**
+	 * Cannot open an archive for reading.
+	 */
 	ZZOpenReadErrorCode,
+	
+	/**
+	 * Cannot read the end of central directory.
+	 */
 	ZZEndOfCentralDirectoryReadErrorCode,
+	
+	/**
+	 * Cannot read a central file header.
+	 */
 	ZZCentralFileHeaderReadErrorCode,
+	
+	/**
+	 * Cannot read a local file.
+	 */
 	ZZLocalFileReadErrorCode,
+	
+	/**
+	 * Cannot open an archive for writing.
+	 */
 	ZZOpenWriteErrorCode,
+	
+	/**
+	 * Cannot write a local file.
+	 */
 	ZZLocalFileWriteErrorCode,
+	
+	/**
+	 * Cannot write a central file header.
+	 */
 	ZZCentralFileHeaderWriteErrorCode,
+	
+	/**
+	 * Cannot write the end of central directory.
+	 */
 	ZZEndOfCentralDirectoryWriteErrorCode,
-	ZZReplaceWriteErrorCode
-} ZZErrorCode;
+    
+	/**
+	 * Cannot replace the zip file after writing.
+	 */
+	ZZReplaceWriteErrorCode,
+	
+	/**
+	 * The compression used is currently unsupported.
+	 */
+	ZZUnsupportedCompressionMethod,
+    
+	/**
+	 * The encryption used is currently unsupported.
+	 */
+	ZZUnsupportedEncryptionMethod,
+    
+	/**
+	 * An invalid CRC checksum has been encountered.
+	 */
+	ZZInvalidCRChecksum
+};
 
 static inline BOOL ZZRaiseError(NSError** error, ZZErrorCode errorCode, NSDictionary* userInfo)
 {

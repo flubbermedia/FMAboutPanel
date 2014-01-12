@@ -776,7 +776,8 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 		{
 			NSLog(@"%@", file.fileName);
 			NSString *filePath = [[self privateDataPath] stringByAppendingPathComponent:file.fileName];
-			[file.data writeToFile:filePath atomically:YES];
+            NSError *error = nil;
+			[[file newDataWithError:&error] writeToFile:filePath atomically:YES];
 		}
 	}
 	

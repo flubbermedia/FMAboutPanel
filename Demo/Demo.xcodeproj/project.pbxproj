@@ -67,11 +67,12 @@
 		65250E4916DED4090016BC13 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		65250E4B16DED4120016BC13 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		65250E4E16DEE36D0016BC13 /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libzipzap.a; sourceTree = "<group>"; };
-		65250E4F16DEE36D0016BC13 /* ZZArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZArchive.h; sourceTree = "<group>"; };
-		65250E5016DEE36D0016BC13 /* ZZArchiveEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZArchiveEntry.h; sourceTree = "<group>"; };
-		65250E5116DEE36D0016BC13 /* ZZError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZError.h; sourceTree = "<group>"; };
 		653BA8F6167024EE006C8083 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		6582585116701147009476E7 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		65BC2A1318834C9C0015AD04 /* ZZArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZZArchive.h; sourceTree = "<group>"; };
+		65BC2A1418834C9C0015AD04 /* ZZConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZZConstants.h; sourceTree = "<group>"; };
+		65BC2A1518834C9C0015AD04 /* ZZError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZZError.h; sourceTree = "<group>"; };
+		65BC2A1718835D440015AD04 /* ZZArchiveEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZZArchiveEntry.h; sourceTree = "<group>"; };
 		65F2D3CE16CEAB5300BEE16C /* ChimpKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChimpKit.h; sourceTree = "<group>"; };
 		65F2D3CF16CEAB5300BEE16C /* ChimpKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChimpKit.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,10 +186,11 @@
 		65250E4D16DEE36D0016BC13 /* ZipZap */ = {
 			isa = PBXGroup;
 			children = (
+				65BC2A1318834C9C0015AD04 /* ZZArchive.h */,
+				65BC2A1718835D440015AD04 /* ZZArchiveEntry.h */,
+				65BC2A1418834C9C0015AD04 /* ZZConstants.h */,
+				65BC2A1518834C9C0015AD04 /* ZZError.h */,
 				65250E4E16DEE36D0016BC13 /* libzipzap.a */,
-				65250E4F16DEE36D0016BC13 /* ZZArchive.h */,
-				65250E5016DEE36D0016BC13 /* ZZArchiveEntry.h */,
-				65250E5116DEE36D0016BC13 /* ZZError.h */,
 			);
 			path = ZipZap;
 			sourceTree = "<group>";

@@ -31,6 +31,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ZZConstants.h"
 
 /**
  * The ZZArchive class represents a zip file for reading only.
@@ -95,13 +96,13 @@
 /**
  * Loads the contents and entries from the source. Any old entries will then be considered invalid.
  *
- * @param error The error information when an error occurs. Pass in *nil* if you do not want error information.
- * @return Whether the load was successful or not.
- *
- * @remarks If you access <entries> or <contents>, the receiver already automatically loads them if needed.
+ * Whenever you access <entries> or <contents>, the receiver will load them as needed.
  * You only need to call this method to force a reload from source, or to check for errors when loading.
+ *
+ * @param error The error information when an error occurs. Pass in nil if you do not want error information.
+ * @return Whether the load was successful or not.
  */
-- (BOOL)load:(NSError**)error;
+- (BOOL)load:(out NSError**)error;
 
 @end
 
@@ -113,13 +114,17 @@
 /**
  * Updates the entries and writes them to the source.
  *
+ * If the write fails and the entries are completely new, the existing zip file will be untouched.
+ *
+ * If the write fails and the entries contain some or all existing entries, the zip file may be corrupted.
+ * In this case, the error information will report the ZZReplaceWriteErrorCode error code.
+ *
  * @param newEntries The entries to update to, may contain some or all existing entries.
- * @param error The error information when an error occurs. Pass in *nil* if you do not want error information.
+ * @param error The error information when an error occurs. Pass in nil if you do not want error information.
  * @return Whether the update was successful or not.
  *
- * @remarks If the write fails and the entries are completely new, the existing zip file will be untouched. Instead, if the write fails and the entries contain some or all existing entries, the zip file may be corrupted. In this case, the error information will report the ZZReplaceWriteErrorCode error code.
  */
 - (BOOL)updateEntries:(NSArray*)newEntries
-				error:(NSError**)error;
+				error:(out NSError**)error;
 
 @end

@@ -51,6 +51,11 @@
 @property (readonly, nonatomic) BOOL compressed;
 
 /**
+ * Whether the entry is encrypted.
+ */
+@property (readonly, nonatomic) BOOL encrypted;
+
+/**
  * The last modified date and time of the entry. The time value is only accurate to 2 seconds.
  */
 @property (readonly, nonatomic) NSDate* lastModified;
@@ -85,7 +90,7 @@
  *
  * @param fileName The file name for the entry.
  * @param compress Whether to compress the entry.
- * @param streamBlock The callback to write the entry's data to the stream. Returns whether the write was considered successful.
+ * @param streamBlock The callback to write the entry's data to the stream. Returns whether the write should be considered successful.
  * @return The created entry.
  */
 + (instancetype)archiveEntryWithFileName:(NSString*)fileName
@@ -97,7 +102,7 @@
  *
  * @param fileName The file name for the entry.
  * @param compress Whether to compress the entry.
- * @param dataBlock The callback to return the entry's data. Returns *nil* if the write was considered unsuccessful.
+ * @param dataBlock The callback to return the entry's data. Returns nil if the write should be considered unsuccessful.
  * @return The created entry.
  */
 + (instancetype)archiveEntryWithFileName:(NSString*)fileName
@@ -109,7 +114,7 @@
  *
  * @param fileName The file name for the entry.
  * @param compress Whether to compress the entry.
- * @param dataConsumerBlock The callback to put the entry's data into the data consumer. Returns whether the write was considered successful.
+ * @param dataConsumerBlock The callback to put the entry's data into the data consumer. Returns whether the write should be considered successful.
  * @return The created entry.
  */
 + (instancetype)archiveEntryWithFileName:(NSString*)fileName
@@ -127,15 +132,15 @@
 /**
  * Creates a new entry.
  *
- * The archive entry will choose the first non-*nil* dataBlock, streamBlock and dataConsumerBlock to supply its data.
+ * The archive entry will choose the first non-nil dataBlock, streamBlock or dataConsumerBlock to supply its data.
  *
  * @param fileName The file name for the entry.
  * @param fileMode The UNIX file mode for the entry. This includes the file type bits.
  * @param lastModified The last modified date and time for the entry. The time value is only accurate to 2 seconds.
  * @param compressionLevel The compression level for the entry: 0 for stored, -1 for default deflate, 1 - 9 for custom deflate levels.
- * @param dataBlock The callback that returns the entry file data. Returns *nil* if the write was considered unsuccessful.
- * @param streamBlock The callback that writes the entry file to the stream. Returns whether the write was considered successful.
- * @param dataConsumerBlock The callback that writes the entry file to the data consumer. Returns whether the write was considered successful.
+ * @param dataBlock The callback that returns the entry file data. Returns nil if the write should be considered unsuccessful.
+ * @param streamBlock The callback that writes the entry file to the stream. Returns whether the write should be considered successful.
+ * @param dataConsumerBlock The callback that writes the entry file to the data consumer. Returns whether the write should be considered successful.
  * @return The created entry.
  */
 + (instancetype)archiveEntryWithFileName:(NSString*)fileName
@@ -149,35 +154,65 @@
 /**
  * Checks whether the entry file is consistent.
  *
- * @param The error information when an error occurs. Pass in *nil* if you do not want error information.
- * @return Whether entry file is consistent or not.
- *
- * @remarks Checks whether the local file entry is consistent with the central file entry and also that
+ * Checks whether the local file entry is consistent with the central file entry and also that
  * the recorded and actual checksums of the data agree.
+ *
+ * @param error The error information when an error occurs. Pass in nil if you do not want error information.
+ * @return Whether entry file is consistent or not.
  */
-- (BOOL)check:(NSError**)error;
+- (BOOL)check:(out NSError**)error;
 
 /**
  * Creates a stream to represent the entry file.
  *
- * @return The new stream: *nil* for new entries.
+ * @param error A pointer to a variable that will contain the error if any.
+ * @return The new stream: nil for new entries.
  */
-- (NSInputStream*)stream;
+- (NSInputStream*)newStreamWithError:(NSError**)error;
+
+/**
+ * Creates a stream to represent the entry file.
+ *
+ * @param password The password to be used for decryption.
+ * @param error A pointer to a variable that will contain the error if any.
+ * @return The new stream: nil for new entries.
+ */
+- (NSInputStream*)newStreamWithPassword:(NSString*)password error:(NSError**)error;
 
 /**
  * Creates data to represent the entry file.
  *
- * @return The new data: *nil* for new entries.
+ * @param error A pointer to a variable that will contain the error if any.
+ * @return The new data: nil for new entries.
  */
-- (NSData*)data;
+- (NSData*)newDataWithError:(NSError**)error;
+
+/**
+ * Creates data to represent the entry file.
+ *
+ * @param password The password to be used for decryption.
+ * @param error A pointer to a variable that will contain the error if any.
+ * @return The new data: nil for new entries.
+ */
+- (NSData*)newDataWithPassword:(NSString*)password error:(NSError**)error;
 
 /**
  * Creates a data provider to represent the entry file.
  *
- * @return The new data provider: *nil* for new entries.
+ * @param error A pointer to a variable that will contain the error if any.
+ * @return The new data provider: nil for new entries.
  */
-- (CGDataProviderRef)newDataProvider;
+- (CGDataProviderRef)newDataProviderWithError:(NSError**)error;
 
-- (id<ZZArchiveEntryWriter>)writerCanSkipLocalFile:(BOOL)canSkipLocalFile;
+/**
+ * Creates a data provider to represent the entry file.
+ *
+ * @param password The password to be used for decryption.
+ * @param error A pointer to a variable that will contain the error if any.
+ * @return The new data provider: nil for new entries.
+ */
+- (CGDataProviderRef)newDataProviderWithPassword:(NSString*)password error:(NSError**)error;
+
+- (id<ZZArchiveEntryWriter>)newWriterCanSkipLocalFile:(BOOL)canSkipLocalFile;
 
 @end
