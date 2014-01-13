@@ -427,9 +427,15 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 		_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
 	}
 	
-	UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-	[viewController.view addSubview:self.view];
-	self.view.frame = viewController.view.bounds;
+	UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+	if (rootVC == nil)
+	{
+		// useful with iOS7
+		rootVC = [UIApplication sharedApplication].delegate.window.rootViewController;
+	}
+
+	[rootVC.view addSubview:self.view];
+	self.view.frame = rootVC.view.bounds;
 	// needs to be called after adding the view, otherwise subviews won't have any frame set.
 	[self viewWillAppear:animated];
 	_box.center = _darkView.center;
