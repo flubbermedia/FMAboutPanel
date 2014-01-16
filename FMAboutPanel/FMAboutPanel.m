@@ -46,6 +46,7 @@ static NSString * const kFPImage = @"image";
 static NSString * const kApplicationsRemoteBaseURL = @"http://services.flubbermedia.com/flubberpanel";
 static NSString * const kApplicationsRemoteRequestFormat = @"?appid=%@&appversion=%@&applocale=%@&device=%@&contentversion=%@";
 static NSString * const kApplicationsRemoteLastCheckDateKey = @"flubberpanel.lastcheck";
+static NSString * const kBundleVersionSavedKey = @"flubberpanel.savedversion";
 static NSString * const kApplicationsTempZipFilename = @"applications.temp.zip";
 static NSString * const kApplicationsLocalZipFilename = @"applications.zip";
 static NSString * const kApplicationsLocalPlistFilename = @"applications.plist";
@@ -679,12 +680,15 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 - (BOOL)shouldLoadApplicationsLocalData
 {
 	NSString *appsFilePath = [[self privateDataPath] stringByAppendingPathComponent:kApplicationsLocalPlistFilename];
-	if ([[NSFileManager defaultManager] fileExistsAtPath:appsFilePath])
+	NSString *bundleVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+	NSString *bundleVersionSaved = [[NSUserDefaults standardUserDefaults] objectForKey:kBundleVersionSavedKey];
+	
+	if ([[NSFileManager defaultManager] fileExistsAtPath:appsFilePath] && [bundleVersionSaved isEqualToString:bundleVersion])
 	{
-		//there's already a file
 		return NO;
 	}
-	//missing files, copy over from bundle
+	
+	[[NSUserDefaults standardUserDefaults] setObject:bundleVersion forKey:kBundleVersionSavedKey];
 	return YES;
 }
 
