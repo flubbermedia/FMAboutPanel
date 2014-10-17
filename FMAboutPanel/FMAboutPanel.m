@@ -291,12 +291,14 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 
 - (void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
 	[self layout];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[self cancelConnection:_iTunesConnection];
+	[super viewWillDisappear:animated];
 }
 
 - (void)layout
