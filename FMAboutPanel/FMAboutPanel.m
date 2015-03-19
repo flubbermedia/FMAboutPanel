@@ -480,7 +480,7 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	[self viewWillDisappear:animated];
 	
 	//dismiss the support email panel if showed
-	[self dismissModalViewControllerAnimated:animated];
+	[self dismissViewControllerAnimated:animated completion:nil];
 	
 	void (^animations) (void) = ^{
 		_darkView.alpha = 0.;
