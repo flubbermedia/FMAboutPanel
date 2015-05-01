@@ -1,0 +1,11 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'FMAboutPanel', :exclusive => true do
+  pod "FMAboutPanel", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "FMAboutPanel", :path => "../"
+
+  
+end
