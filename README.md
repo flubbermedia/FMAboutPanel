@@ -1,15 +1,12 @@
 # FMAboutPanel
 
-[![CI Status](http://img.shields.io/travis/Andrea Ottolina/FMAboutPanel.svg?style=flat)](https://travis-ci.org/Andrea Ottolina/FMAboutPanel)
-[![Version](https://img.shields.io/cocoapods/v/FMAboutPanel.svg?style=flat)](http://cocoapods.org/pods/FMAboutPanel)
-[![License](https://img.shields.io/cocoapods/l/FMAboutPanel.svg?style=flat)](http://cocoapods.org/pods/FMAboutPanel)
-[![Platform](https://img.shields.io/cocoapods/p/FMAboutPanel.svg?style=flat)](http://cocoapods.org/pods/FMAboutPanel)
+## Purpose
+
+FMAboutPanel is a class designed to show an "About Panel" with many useful features.
 
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-## Requirements
 
 ## Installation
 
@@ -20,9 +17,9 @@ it, simply add the following line to your Podfile:
 pod "FMAboutPanel"
 ```
 
-## Author
+## Authors
 
-Andrea Ottolina, andrea.otto@tiscali.it
+Andrea Ottolina, Maurizio Cremaschi
 
 ## License
 

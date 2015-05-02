@@ -1,0 +1,1 @@
+../../../ChimpKit2/Core/Classes/CKAuthViewController.h

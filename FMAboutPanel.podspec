@@ -1,38 +1,20 @@
-#
-# Be sure to run `pod lib lint FMAboutPanel.podspec' to ensure this is a
-# valid spec and remove all comments before submitting the spec.
-#
-# Any lines starting with a # are optional, but encouraged
-#
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
-#
-
 Pod::Spec.new do |s|
-  s.name             = "FMAboutPanel"
-  s.version          = "0.1.0"
-  s.summary          = "A short description of FMAboutPanel."
-  s.description      = <<-DESC
-                       An optional longer description of FMAboutPanel
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
-                       DESC
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/FMAboutPanel"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  s.name             = 'FMAboutPanel'
+  s.version          = '1.0.0'
+  s.summary          = 'A class designed to show an *About Panel* with many useful features.'
+  s.homepage         = 'https://github.com/flubbermedia/FMAboutPanel'
   s.license          = 'MIT'
-  s.author           = { "Andrea Ottolina" => "andrea.otto@tiscali.it" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/FMAboutPanel.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.authors          = 'Andrea Ottolina', 'Maurizio Cremaschi'
+  s.source           = { :git => 'https://github.com/flubbermedia/FMAboutPanel.git', :tag => s.version.to_s }
 
-  s.platform     = :ios, '7.0'
+  s.platform     = :ios, '5.0'
+  s.ios.deployment_target = '5.0'
   s.requires_arc = true
 
-  s.source_files = 'Pod/Classes/**/*'
-  s.resource_bundles = {
-    'FMAboutPanel' => ['Pod/Assets/*.png']
-  }
+  s.source_files = 'FMAboutPanel/FMAboutPanel.{h,m}'
+  s.resource = 'FMAboutPanel/FMAboutPanel.bundle'
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.frameworks = 'UIKit', 'QuartzCore'
+  s.dependency 'zipzap', '~>8.0'
+  s.dependency 'ChimpKit2', '~>2.0'
 end

@@ -7,6 +7,7 @@
 //
 
 #import "FMViewController.h"
+#import "FMAboutPanel.h"
 
 @interface FMViewController ()
 
@@ -24,6 +25,22 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+	{
+		return interfaceOrientation == UIInterfaceOrientationPortrait;
+	}
+	return YES;
+}
+
+#pragma mark - Actions
+
+- (IBAction)didTapShowPanel:(id)sender
+{
+	[[FMAboutPanel sharedInstance] present];
 }
 
 @end
