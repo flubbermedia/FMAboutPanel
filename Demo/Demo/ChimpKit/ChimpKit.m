@@ -8,7 +8,7 @@
 
 #import "ChimpKit.h"
 
-static NSUInteger timeout = 10;
+static NSUInteger chimpKitTimeout = 10;
 
 @interface ChimpKit()
 - (NSMutableData *)encodeRequestParams:(NSDictionary *)params;
@@ -33,7 +33,7 @@ static NSUInteger timeout = 10;
 @synthesize error = _error;
 
 + (void)setTimeout:(NSUInteger)tout {
-    timeout = tout;
+    chimpKitTimeout = tout;
 }
 
 #pragma mark - Initialization
@@ -87,7 +87,7 @@ static NSUInteger timeout = 10;
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
 	[request setHTTPMethod:@"POST"];
-    [request setTimeoutInterval:timeout];
+    [request setTimeoutInterval:chimpKitTimeout];
 
     NSMutableData *postData = [self encodeRequestParams:params];
     [request setHTTPBody:postData];
