@@ -39,7 +39,8 @@ typedef void (^PageTracking)(NSString *page, NSDictionary *parameters);
 // Tracking Block
 
 @property (nonatomic, copy) EventTracking logEvent;
-@property (nonatomic, copy) PageTracking logPage;
+@property (nonatomic, copy) PageTracking logPresent;
+@property (nonatomic, copy) PageTracking logDismiss;
 
 // Outlet
 

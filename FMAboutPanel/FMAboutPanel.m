@@ -177,10 +177,14 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 		{
 			NSLog(@"*** Warning: Tracking Block Missing for event category:%@|action:%@|label:%@|parameters:%@", category, action, label, parameters);
 		};
-		_logPage = ^(NSString *page, NSDictionary *parameters)
+		_logPresent = ^(NSString *page, NSDictionary *parameters)
 		{
 			NSLog(@"*** Warning: Tracking Block Missing for page:%@|parameters:%@", page, parameters);
 		};
+        _logDismiss = ^(NSString *page, NSDictionary *parameters)
+        {
+            NSLog(@"*** Warning: Tracking Block Missing for page:%@|parameters:%@", page, parameters);
+        };
 		
 		// text
 		_textPanelFollow = [self localizedStringForKey:kLocalizeFollowUs];
@@ -418,16 +422,10 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 - (void)presentAnimated:(BOOL)animated
 {
 	NSString *eventCategory = [_trackingPrefix lowercaseString];
-	NSString *eventAction = nil;
-	NSString *eventLabel = nil;
 	NSDictionary *eventParameters = [NSDictionary dictionaryWithObjectsAndKeys:_applicationsPlistVersion, @"plistVersion", nil];
 	if (_trackingPageViews)
 	{
-		_logPage(eventCategory, eventParameters);
-	}
-	else
-	{
-		_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
+		_logPresent(eventCategory, eventParameters);
 	}
 	
 	UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
@@ -477,7 +475,14 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 
 - (void)dismissAnimated:(BOOL)animated
 {
-	[self viewWillDisappear:animated];
+    NSString *eventCategory = [_trackingPrefix lowercaseString];
+    NSDictionary *eventParameters = [NSDictionary dictionaryWithObjectsAndKeys:_applicationsPlistVersion, @"plistVersion", nil];
+    if (_trackingPageViews)
+    {
+        _logDismiss(eventCategory, eventParameters);
+    }
+    
+    [self viewWillDisappear:animated];
 	
 	//dismiss the support email panel if showed
 	[self dismissViewControllerAnimated:animated completion:nil];
