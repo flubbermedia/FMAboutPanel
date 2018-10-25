@@ -43,7 +43,7 @@ static NSString * const kPlistURLSchemesKey = @"URLSchemes";
 static NSString * const kFPName = @"name";
 static NSString * const kFPImage = @"image";
 
-static NSString * const kApplicationsRemoteBaseURL = @"http://services.flubbermedia.com/flubberpanel";
+static NSString * const kApplicationsRemoteBaseURL = @"https://services.flubbermedia.com/flubberpanel";
 static NSString * const kApplicationsRemoteRequestFormat = @"?appid=%@&appversion=%@&applocale=%@&device=%@&contentversion=%@";
 static NSString * const kApplicationsRemoteLastCheckDateKey = @"flubberpanel.lastcheck";
 static NSString * const kBundleVersionSavedKey = @"flubberpanel.savedversion";
