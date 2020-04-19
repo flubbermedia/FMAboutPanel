@@ -21,13 +21,17 @@
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
-    {
-        return interfaceOrientation == UIInterfaceOrientationPortrait;
-    }
+- (BOOL)shouldAutorotate {
     return YES;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone)
+    {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+    return UIInterfaceOrientationMaskAll;
 }
 
 #pragma mark - Actions

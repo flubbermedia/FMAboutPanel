@@ -383,9 +383,9 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 
 #pragma mark - Rotation
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-	return [[UIApplication sharedApplication].keyWindow.rootViewController shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+    return [UIApplication sharedApplication].keyWindow.rootViewController.supportedInterfaceOrientations;
 }
 
 #pragma mark - Public methods
