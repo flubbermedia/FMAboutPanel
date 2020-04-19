@@ -144,13 +144,10 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 													 name:UIApplicationDidFinishLaunchingNotification
 												   object:nil];
 		
-		if (&UIApplicationWillEnterForegroundNotification)
-		{
-			[[NSNotificationCenter defaultCenter] addObserver:self
+		[[NSNotificationCenter defaultCenter] addObserver:self
 													 selector:@selector(applicationWillEnterForeground:)
 														 name:UIApplicationWillEnterForegroundNotification
 													   object:nil];
-		}
 		
 		// set defaults
 		_debug = NO;
@@ -270,27 +267,6 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 		_box.frame = CGRectInset(_box.frame, 0.0, -CGRectGetHeight(_supportView.frame) * 0.5);
 	}
 	
-}
-
-- (void)viewDidUnload
-{
-	_box = nil;
-	_darkView = nil;
-	_bgImageView = nil;
-	_logoImageView = nil;
-	_followUsLabel = nil;
-	_supportLabel = nil;
-	_ourAppsLabel = nil;
-	_infoLabel = nil;
-	_facebookButton = nil;
-	_twitterButton = nil;
-	_websiteButton = nil;
-	_newsletterButton = nil;
-	_supportView = nil;
-	_supportButton = nil;
-	_appsScrollView = nil;
-	_pageControl = nil;
-	[super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -442,8 +418,8 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	_box.center = _darkView.center;
 	
 	void (^animations) (void) = ^{
-		_darkView.alpha = 1.;
-		_box.transform = CGAffineTransformIdentity;
+        self->_darkView.alpha = 1.;
+        self->_box.transform = CGAffineTransformIdentity;
 	};
 	
 	void (^completion) (BOOL) = ^(BOOL finished){
@@ -488,8 +464,8 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	[self dismissViewControllerAnimated:animated completion:nil];
 	
 	void (^animations) (void) = ^{
-		_darkView.alpha = 0.;
-		_box.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0., self.view.frame.size.height);
+        self->_darkView.alpha = 0.;
+        self->_box.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0., self.view.frame.size.height);
 	};
 	
 	void (^completion) (BOOL) = ^(BOOL finished){
