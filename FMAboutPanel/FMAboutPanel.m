@@ -173,15 +173,15 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 		_trackingPrefix = kTrackingPrefix;
 		_logEvent = ^(NSString *category, NSString *action, NSString *label, NSDictionary *parameters)
 		{
-			NSLog(@"*** Warning: Tracking Block Missing for event category:%@|action:%@|label:%@|parameters:%@", category, action, label, parameters);
+			NSLog(@"[FMAboutPanel] *** Warning: Tracking Block Missing for event category:%@|action:%@|label:%@|parameters:%@", category, action, label, parameters);
 		};
 		_logPresent = ^(NSString *page, NSDictionary *parameters)
 		{
-			NSLog(@"*** Warning: Tracking Block Missing for page:%@|parameters:%@", page, parameters);
+			NSLog(@"[FMAboutPanel] *** Warning: Tracking Block Missing for page:%@|parameters:%@", page, parameters);
 		};
         _logDismiss = ^(NSString *page, NSDictionary *parameters)
         {
-            NSLog(@"*** Warning: Tracking Block Missing for page:%@|parameters:%@", page, parameters);
+            NSLog(@"[FMAboutPanel] *** Warning: Tracking Block Missing for page:%@|parameters:%@", page, parameters);
         };
 		
 		// text
@@ -260,7 +260,7 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 		_facebookButton.transform = buttonTransform;
 		_twitterButton.transform = buttonTransform;
     } else {
-        NSLog(@"Warning: Newsletter is no longer supported");
+        NSLog(@"[FMAboutPanel] *** Warning: Newsletter is no longer supported");
     }
 	
 	_supportView.hidden = !_supportEnabled;
@@ -592,11 +592,11 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
     NSDictionary *eventParameters = nil;
     _logEvent(eventCategory, eventAction, eventLabel, eventParameters);
     
-    NSLog(@"Warning: Newsletter is no longer supported");
+    NSLog(@"[FMAboutPanel] *** Warning: Newsletter is no longer supported");
     
 //    if (!_newsletterApiKey || !_newsletterListID)
 //    {
-//        NSLog(@"Warning: Newsletter ApiKey or ListID missing");
+//        NSLog(@"[FMAboutPanel] *** Warning: Newsletter ApiKey or ListID missing");
 //        return;
 //    }
 //TODO: Show Alertview with textfield for email input and process
@@ -691,39 +691,41 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	
 	NSURL *url = [NSURL URLWithString:urlPath];
 	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:20];
-	[NSURLConnection sendAsynchronousRequest:request
-									   queue:[NSOperationQueue new]
-						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-							   if (error == nil)
-							   {
-								   // Response received: update request date
-								   [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kApplicationsRemoteLastCheckDateKey];
-								   
-								   // Check if data or old content. Server should return statusCode 204 if update is not necessary
-								   NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
-								   
-								   // Check the content-type header
-								   NSString *contentTypeValue = nil;
-								   NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
-								   for (NSString *headerKey in [headers allKeys])
-								   {
-									   if ([@"content-type" caseInsensitiveCompare:headerKey] == NSOrderedSame)
-									   {
-										   contentTypeValue = [[headers valueForKey:headerKey] lowercaseString];
-									   }
-								   }
-								   
-								   if (data != nil && statusCode == 200 && [contentTypeValue isEqualToString:@"application/zip"])
-								   {
-									   [self unzipData:data];
-									   [self updateApplications];
-								   }
-							   }
-							   else
-							   {
-								   //NSLog(@"Error: %@", [error localizedDescription]);
-							   }
-						   }];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionTask *task = [session dataTaskWithRequest:request
+                                        completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        // TODO: Do something here
+        if (error == nil)
+        {
+            // Response received: update request date
+            [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kApplicationsRemoteLastCheckDateKey];
+            
+            // Check if data or old content. Server should return statusCode 204 if update is not necessary
+            NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
+            
+            // Check the content-type header
+            NSString *contentTypeValue = nil;
+            NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
+            for (NSString *headerKey in [headers allKeys])
+            {
+                if ([@"content-type" caseInsensitiveCompare:headerKey] == NSOrderedSame)
+                {
+                    contentTypeValue = [[headers valueForKey:headerKey] lowercaseString];
+                }
+            }
+            
+            if (data != nil && statusCode == 200 && [contentTypeValue isEqualToString:@"application/zip"])
+            {
+                [self unzipData:data];
+                [self updateApplications];
+            }
+        }
+        else
+        {
+            NSLog(@"[FMAboutPanel] > Plist update error: %@", [error localizedDescription]);
+        }
+    }];
+    [task resume];
 }
 
 - (void)unzipData:(NSData *)zipData
@@ -749,7 +751,7 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	{
 		if (![file.fileName hasPrefix:@"_"])
 		{
-			NSLog(@"%@", file.fileName);
+			NSLog(@"[FMAboutPanel] > Unzip app list file: %@", file.fileName);
 			NSString *filePath = [[self privateDataPath] stringByAppendingPathComponent:file.fileName];
             NSError *error = nil;
 			[[file newDataWithError:&error] writeToFile:filePath atomically:YES];
@@ -826,7 +828,7 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
         [storeProductViewController setDelegate:self];
         [storeProductViewController loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier : appID} completionBlock:^(BOOL result, NSError *error) {
             if (error) {
-                NSLog(@"Error %@ with User Info %@.", error, [error userInfo]);
+                NSLog(@"[FMAboutPanel] > Open App Store view error %@ with User Info %@.", error, [error userInfo]);
             } else {
                 [self presentViewController:storeProductViewController animated:YES completion:nil];
             }
