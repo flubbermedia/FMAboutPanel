@@ -533,7 +533,7 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	if (found)
 	{
 		//open the installed app
-		[[UIApplication sharedApplication] openURL:url];
+        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
 	}
 	else
 	{
@@ -555,7 +555,7 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	{
 		url = [NSURL URLWithString:_facebookWebURL];
 	}
-	[[UIApplication sharedApplication] openURL:url];
+    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
 	
 }
 
@@ -572,7 +572,7 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	{
 		url = [NSURL URLWithString:_twitterWebURL];
 	}
-	[[UIApplication sharedApplication] openURL:url];
+    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
 }
 
 - (IBAction)didTapWebsite:(id)sender
@@ -584,7 +584,7 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
 	
 	NSURL *url = [NSURL URLWithString:_websiteURL];
-	[[UIApplication sharedApplication] openURL:url];
+    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
 	
 }
 
@@ -645,8 +645,8 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	{
 		NSString *toRecipients = _supportEmail;
 		NSString *email = [NSString stringWithFormat:@"mailto:%@" , toRecipients];
-		email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
+        email = [email stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email] options:@{} completionHandler:nil];
 	}
 }
 
@@ -704,7 +704,7 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 							   _applicationsPlistVersion
 							   ];
 	
-	urlParameters = [urlParameters stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    urlParameters = [urlParameters stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 	NSString *urlPath = [_applicationsRemoteBaseURL stringByAppendingString:urlParameters];
 	
 	NSURL *url = [NSURL URLWithString:urlPath];
