@@ -85,7 +85,7 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 @property (strong, nonatomic) NSURL *iTunesURL;
 @property (strong, nonatomic) NSArray *applications;
 @property (strong, nonatomic) NSString *applicationsPlistVersion;
-@property (strong, nonatomic) UIAlertView *newsletterSignupAlertView;
+@property (strong, nonatomic) UIAlertController *newsletterSignupAlertView;
 @property (strong, nonatomic) UITextField *newsletterSignupTextField;
 
 @property (strong, nonatomic) NSString *textAppVersion;
@@ -258,7 +258,9 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 		_newsletterButton.hidden = YES;
 		_facebookButton.transform = buttonTransform;
 		_twitterButton.transform = buttonTransform;
-	}
+    } else {
+        NSLog(@"Warning: Newsletter is no longer supported");
+    }
 	
 	_supportView.hidden = !_supportEnabled;
 	[_supportButton setTitle:_supportEmail forState:UIControlStateNormal];
@@ -588,37 +590,49 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	
 }
 
-- (IBAction)didTapNewsletter:(id)sender
-{
-	NSString *eventCategory = [_trackingPrefix lowercaseString];
-	NSString *eventAction = @"follow";
-	NSString *eventLabel = @"newsletter";
-	NSDictionary *eventParameters = nil;
-	_logEvent(eventCategory, eventAction, eventLabel, eventParameters);
-	
-	if (!_newsletterApiKey || !_newsletterListID)
-	{
-		NSLog(@"Warning: Newsletter ApiKey or ListID missing");
-		return;
-	}
-	_newsletterSignupAlertView = [[UIAlertView alloc] initWithTitle:_textNewsletterSubscribeAlertTitle
-															message:_textNewsletterSubscribeAlertMessage
-														   delegate:self
-												  cancelButtonTitle:_textNewsletterSubscribeAlertButtonDismiss
-												  otherButtonTitles:_textNewsletterSubscribeAlertButtonSubscribe, nil ];
-	
-	_newsletterSignupAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-	
-	_newsletterSignupTextField = [_newsletterSignupAlertView textFieldAtIndex:0];
-	
-	// Common text field properties
-	_newsletterSignupTextField.delegate = self;
-	_newsletterSignupTextField.placeholder = _textNewsletterSubscribeAlertFieldPlaceholder;
-	_newsletterSignupTextField.keyboardType = UIKeyboardTypeEmailAddress;
-	_newsletterSignupTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-	_newsletterSignupTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-	
-	[_newsletterSignupAlertView show];
+- (IBAction)didTapNewsletter:(id)sender {
+    
+    NSString *eventCategory = [_trackingPrefix lowercaseString];
+    NSString *eventAction = @"follow";
+    NSString *eventLabel = @"newsletter";
+    NSDictionary *eventParameters = nil;
+    _logEvent(eventCategory, eventAction, eventLabel, eventParameters);
+    
+    NSLog(@"Warning: Newsletter is no longer supported");
+    
+//    if (!_newsletterApiKey || !_newsletterListID)
+//    {
+//        NSLog(@"Warning: Newsletter ApiKey or ListID missing");
+//        return;
+//    }
+//
+//    _newsletterSignupAlertView = [UIAlertController alertControllerWithTitle:_textNewsletterSubscribeAlertTitle
+//                                                                     message:_textNewsletterSubscribeAlertMessage
+//                                                              preferredStyle:UIAlertControllerStyleAlert];
+//
+//    UIAlertAction *dismiss = [UIAlertAction actionWithTitle:_textNewsletterSubscribeAlertButtonDismiss
+//                                                            style:UIAlertActionStyleCancel handler:nil];
+//
+//    UIAlertAction *subscribe = [UIAlertAction actionWithTitle:_textNewsletterSubscribeAlertButtonSubscribe
+//                                                            style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        // DO SOMETHING
+//        [self chimpKitSubscribe];
+//    }];
+//
+//    [_newsletterSignupAlertView addAction:dismiss];
+//    [_newsletterSignupAlertView addAction:subscribe];
+//
+//    __unsafe_unretained typeof(self) weakSelf = self;
+//    [_newsletterSignupAlertView addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+//        textField.placeholder = weakSelf.textNewsletterSubscribeAlertFieldPlaceholder;
+//        textField.keyboardType = UIKeyboardTypeEmailAddress;
+//        textField.autocorrectionType = UITextAutocorrectionTypeNo;
+//        textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+//        //
+//    }];
+//
+//    [self presentViewController:_newsletterSignupAlertView animated:YES completion:nil];
+    
 }
 
 - (IBAction)didTapSupport:(id)sender
@@ -898,77 +912,11 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	_pageControl.currentPage = currentPage;
 }
 
-#pragma mark - ChimpKit Delegate Methods
-
-- (void)showSubscribeError {
-	UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:_textNewsletterFailAlertTitle
-															 message:_textNewsletterFailAlertMessage
-															delegate:nil
-												   cancelButtonTitle:_textNewsletterFailAlertDismiss
-												   otherButtonTitles:nil];
-	[errorAlertView show];
-}
-
-- (void)ckRequestSucceeded:(ChimpKit *)ckRequest {
-	if (![ckRequest.responseString isEqualToString:@"true"]) {
-		[self showSubscribeError];
-	}
-}
-
-- (void)ckRequestFailed:(NSError *)error {
-	[self showSubscribeError];
-}
-
 #pragma mark - Mail Delegate
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
 	[controller dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - ChimpKit
-
-- (void)chimpKitSubscribe
-{
-	NSMutableDictionary *params = [NSMutableDictionary dictionary];
-	[params setValue:@"true" forKey:@"update_existing"];
-	[params setValue:_newsletterListID forKey:@"id"];
-	[params setValue:_newsletterSignupTextField.text forKey:@"email_address"];
-	[params setValue:(_newsletterDoubleOptIn ? @"true" : @"false") forKey:@"double_optin"];
-	if (_newsletterListGroup && _newsletterListGroupOption)
-	{
-		NSArray *grouping = [NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:
-													  _newsletterListGroup, @"name",
-													  _newsletterListGroupOption, @"groups", nil]
-							 ];
-		
-		NSMutableDictionary *mergeVars = [NSMutableDictionary dictionary];
-		[mergeVars setValue:grouping forKey:@"GROUPINGS"];
-		
-		[params setValue:mergeVars forKey:@"merge_vars"];
-		[params setValue:@"false" forKey:@"replace_interests"];
-	}
-	ChimpKit *chimpKit = [[ChimpKit alloc] initWithDelegate:self andApiKey:_newsletterApiKey];
-	[chimpKit callApiMethod:@"listSubscribe" withParams:params];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-	if (alertView == _newsletterSignupAlertView && buttonIndex == 1)
-	{
-		// Subscribe pressed
-		[self chimpKitSubscribe];
-	}
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)aTextField
-{
-	if (aTextField == _newsletterSignupTextField)
-	{        
-		[_newsletterSignupAlertView dismissWithClickedButtonIndex:1 animated:YES];
-		return NO;
-	}
-	return YES;
 }
 
 #pragma mark - Localization

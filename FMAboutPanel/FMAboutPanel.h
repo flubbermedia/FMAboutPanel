@@ -29,12 +29,11 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
-#import "ChimpKit.h"
 
 typedef void (^EventTracking)(NSString *category, NSString *action, NSString *label, NSDictionary *parameters);
 typedef void (^PageTracking)(NSString *page, NSDictionary *parameters);
 
-@interface FMAboutPanel : UIViewController <NSURLConnectionDelegate, UIScrollViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, MFMailComposeViewControllerDelegate, ChimpKitDelegate>
+@interface FMAboutPanel : UIViewController <NSURLConnectionDelegate, UIScrollViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, MFMailComposeViewControllerDelegate>
 
 // Tracking Block
 

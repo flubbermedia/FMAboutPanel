@@ -33,7 +33,6 @@
 		65250E5216DEE36D0016BC13 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65250E4E16DEE36D0016BC13 /* libzipzap.a */; };
 		653BA8F7167024EE006C8083 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 653BA8F6167024EE006C8083 /* Default-568h@2x.png */; };
 		6582585216701147009476E7 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582585116701147009476E7 /* MessageUI.framework */; };
-		6584D248244C28DE00F51232 /* ChimpKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6584D246244C28DE00F51232 /* ChimpKit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,8 +66,6 @@
 		65250E4E16DEE36D0016BC13 /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libzipzap.a; sourceTree = "<group>"; };
 		653BA8F6167024EE006C8083 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		6582585116701147009476E7 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		6584D246244C28DE00F51232 /* ChimpKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChimpKit.m; sourceTree = "<group>"; };
-		6584D247244C28DE00F51232 /* ChimpKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChimpKit.h; sourceTree = "<group>"; };
 		6584D249244C293200F51232 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		6584D24A244C293200F51232 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		65BC2A1318834C9C0015AD04 /* ZZArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZZArchive.h; sourceTree = "<group>"; };
@@ -195,19 +192,9 @@
 			path = ZipZap;
 			sourceTree = "<group>";
 		};
-		6584D245244C28DE00F51232 /* ChimpKit */ = {
-			isa = PBXGroup;
-			children = (
-				6584D246244C28DE00F51232 /* ChimpKit.m */,
-				6584D247244C28DE00F51232 /* ChimpKit.h */,
-			);
-			path = ChimpKit;
-			sourceTree = "<group>";
-		};
 		65F2D38416CEAAD900BEE16C /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				6584D245244C28DE00F51232 /* ChimpKit */,
 				65250E4D16DEE36D0016BC13 /* ZipZap */,
 			);
 			name = ThirdParty;
@@ -303,7 +290,6 @@
 				14B281C815BEF1040030CAC5 /* main.m in Sources */,
 				14B281CC15BEF1040030CAC5 /* AppDelegate.m in Sources */,
 				14B281D515BEF1040030CAC5 /* ViewController.m in Sources */,
-				6584D248244C28DE00F51232 /* ChimpKit.m in Sources */,
 				147A5E1316A96B7300278F8D /* FMAboutPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
