@@ -39,6 +39,7 @@ static double const kApplicationsUpdatePeriod = 1;
 
 static NSString * const kPlistApplicationsKey = @"applications";
 static NSString * const kPlistAppStoreURLKey = @"appStoreURL";
+static NSString * const kPlistAppStoreIDKey = @"appStoreID";
 static NSString * const kPlistURLSchemesKey = @"URLSchemes";
 static NSString * const kFPName = @"name";
 static NSString * const kFPImage = @"image";
@@ -279,7 +280,6 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-	[self cancelConnection:_iTunesConnection];
 	[super viewWillDisappear:animated];
 }
 
@@ -518,13 +518,6 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 		}
 	}
 	
-	if (found == NO)
-	{
-		//NSString *urlPath = [NSString stringWithFormat:kAppStoreFormat, [app objectForKey:kFPAppStoreID]];
-		NSString *urlPath = [app objectForKey:kPlistAppStoreURLKey];
-		url = [NSURL URLWithString:urlPath];
-	}
-	
 	NSString *eventCategory = [_trackingPrefix lowercaseString];
 	NSString *eventAction = @"apps";
 	NSString *eventLabel = nil;
@@ -540,7 +533,8 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	else
 	{
 		//open the appstore link
-		[self openReferralURL:url];
+        NSString *appStoreID = [app objectForKey:kPlistAppStoreIDKey];
+        [self openAppStoreAppView:appStoreID];
 	}
 }
 
@@ -605,33 +599,7 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 //        NSLog(@"Warning: Newsletter ApiKey or ListID missing");
 //        return;
 //    }
-//
-//    _newsletterSignupAlertView = [UIAlertController alertControllerWithTitle:_textNewsletterSubscribeAlertTitle
-//                                                                     message:_textNewsletterSubscribeAlertMessage
-//                                                              preferredStyle:UIAlertControllerStyleAlert];
-//
-//    UIAlertAction *dismiss = [UIAlertAction actionWithTitle:_textNewsletterSubscribeAlertButtonDismiss
-//                                                            style:UIAlertActionStyleCancel handler:nil];
-//
-//    UIAlertAction *subscribe = [UIAlertAction actionWithTitle:_textNewsletterSubscribeAlertButtonSubscribe
-//                                                            style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//        // DO SOMETHING
-//        [self chimpKitSubscribe];
-//    }];
-//
-//    [_newsletterSignupAlertView addAction:dismiss];
-//    [_newsletterSignupAlertView addAction:subscribe];
-//
-//    __unsafe_unretained typeof(self) weakSelf = self;
-//    [_newsletterSignupAlertView addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-//        textField.placeholder = weakSelf.textNewsletterSubscribeAlertFieldPlaceholder;
-//        textField.keyboardType = UIKeyboardTypeEmailAddress;
-//        textField.autocorrectionType = UITextAutocorrectionTypeNo;
-//        textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-//        //
-//    }];
-//
-//    [self presentViewController:_newsletterSignupAlertView animated:YES completion:nil];
+//TODO: Show Alertview with textfield for email input and process
     
 }
 
@@ -849,50 +817,24 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 	}
 }
 
-#pragma mark - App Store Affiliate links utilities
+#pragma mark - App Store App View
 
-- (void)openReferralURL:(NSURL *)referralURL
-{
-	_iTunesConnection = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:referralURL] delegate:self startImmediately:YES];
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+- (void)openAppStoreAppView:(NSString *)appID {
+    SKStoreProductViewController *storeProductViewController = [[SKStoreProductViewController alloc] init];
+     
+        // Configure View Controller
+        [storeProductViewController setDelegate:self];
+        [storeProductViewController loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier : appID} completionBlock:^(BOOL result, NSError *error) {
+            if (error) {
+                NSLog(@"Error %@ with User Info %@.", error, [error userInfo]);
+            } else {
+                [self presentViewController:storeProductViewController animated:YES completion:nil];
+            }
+        }];
 }
 
-// Save the most recent URL in case multiple redirects occur
-// "iTunesURL" is an NSURL property in your class declaration
-- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
-{
-	_iTunesURL = [response URL];
-	if( [_iTunesURL.host hasSuffix:@"itunes.apple.com"])
-	{
-		[self cancelConnection:connection];
-		[self connectionDidFinishLoading:connection];
-		return nil;
-	}
-	else
-	{
-		return request;
-	}
-}
-
-// No more redirects; use the last URL saved
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-	[[UIApplication sharedApplication] openURL:_iTunesURL];
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-	NSString *alertTitle = _textPanelAppsAlertNoConnection;
-	NSString *alertMessage = nil;
-	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertTitle message:alertMessage delegate:nil cancelButtonTitle:_textPanelAppsAlertDismiss otherButtonTitles:nil];
-	[alertView show];
-	[self cancelConnection:connection];
-}
-
-- (void)cancelConnection:(NSURLConnection *)connection
-{
-	[connection cancel];
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+- (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark Page Control
