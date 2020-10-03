@@ -823,16 +823,23 @@ static NSString * const kLocalizeConnectionNeeded = @"You need an Internet conne
 
 - (void)openAppStoreAppView:(NSString *)appID {
     SKStoreProductViewController *storeProductViewController = [[SKStoreProductViewController alloc] init];
-     
-        // Configure View Controller
-        [storeProductViewController setDelegate:self];
-        [storeProductViewController loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier : appID} completionBlock:^(BOOL result, NSError *error) {
-            if (error) {
-                NSLog(@"[FMAboutPanel] > Open App Store view error %@ with User Info %@.", error, [error userInfo]);
-            } else {
-                [self presentViewController:storeProductViewController animated:YES completion:nil];
-            }
-        }];
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    // Configure View Controller
+    [storeProductViewController setDelegate:self];
+    [storeProductViewController loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier : appID}
+                                          completionBlock:^(BOOL result, NSError *error) {
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        
+        if (error) {
+            NSLog(@"[FMAboutPanel] > Open App Store view error %@ with User Info %@.", error, [error userInfo]);
+        } else {
+            [self presentViewController:storeProductViewController animated:YES completion:nil];
+        }
+        
+    }];
 }
 
 - (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
